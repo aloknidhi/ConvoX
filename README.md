@@ -34,7 +34,8 @@
 8. [Automated Testing & Verification](#-automated-testing--verification)
 9. [Project Directory Structure](#-project-directory-structure)
 10. [Security & Cryptography Highlights](#-security--cryptography-highlights)
-11. [License & Acknowledgments](#-license--acknowledgments)
+11. [Docker Deployment](#-docker-deployment)
+12. [License & Acknowledgments](#-license--acknowledgments)
 
 ---
 
@@ -427,6 +428,70 @@ npm run dev
 ```
 
 Open **`http://localhost:5173`** in your browser. All API requests made to `/api/*` are automatically proxied to the C++ server running on `http://localhost:8080` by Vite.
+
+---
+
+## 🐳 Docker Deployment
+
+ConvoX includes a multi-stage `Dockerfile` that builds the C++ server from source and ships it as a lean Debian runtime image.
+
+### Build the image
+
+```bash
+docker build -t convox .
+```
+
+### Run the container
+
+The container exposes port **8080 internally**. Map it to any host port you prefer:
+
+```bash
+# Run ConvoX on host port 8081 (recommended if 8080 is occupied)
+docker run -d -p 8081:8080 convox
+
+# Verify it's healthy
+curl http://localhost:8081/health
+```
+
+Access the API at `http://localhost:8081` (or whichever host port you mapped).
+
+### ⚠️ Port 8080 already in use
+
+If you run `docker run -p 8080:8080 convox` and get:
+
+```
+failed to bind host port 0.0.0.0:8080/tcp: address already in use
+```
+
+another process on your machine already owns host port 8080. Choose one of:
+
+| Option | Command |
+|--------|---------|
+| **Use a different host port** (simplest) | `docker run -d -p 8081:8080 convox` |
+| **Free port 8080 first** | Find the PID with `sudo ss -tlnp \| grep 8080`, then `kill -9 <PID>`, then `docker run -d -p 8080:8080 convox` |
+
+The container itself always listens on `:8080`; only the host-side mapping changes.
+
+### Environment variables
+
+The Docker image reads these at runtime (set via `--env-file .env` or `-e`):
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `HOST` | `0.0.0.0` | Bind address |
+| `PORT` | `8080` | Internal container port |
+| `DATABASE_PATH` | `/var/data/connectx.db` | SQLite database location |
+| `UPLOAD_DIRECTORY` | `/var/data/uploads` | Attachment storage directory |
+
+Example with a custom env file:
+
+```bash
+docker run -d -p 8081:8080 --env-file .env convox
+```
+
+### Docker + frontend
+
+The `Dockerfile` builds and serves only the C++ backend. For the React frontend, build it locally and serve `frontend/dist/` with any static host (nginx, Vercel, etc.), or deploy it separately via `vercel.json`.
 
 ---
 
