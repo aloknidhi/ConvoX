@@ -12,7 +12,7 @@ AuthController::AuthController(std::shared_ptr<IAuthService> authService)
     : authService_(std::move(authService)) {}
 
 std::string AuthController::extractSessionToken(const httplib::Request& req) {
-    // 1. Check Cookie header (support connectx_session and sampark_session)
+    // 1. Check Cookie header (support connectx_session and ConvoX_session)
     std::string cookieHeader = req.get_header_value("Cookie");
     if (!cookieHeader.empty()) {
         std::istringstream stream(cookieHeader);
@@ -26,9 +26,9 @@ std::string AuthController::extractSessionToken(const httplib::Request& req) {
             if (part.rfind(cookiePrefix, 0) == 0) {
                 return part.substr(cookiePrefix.length());
             }
-            const std::string samparkPrefix = "sampark_session=";
-            if (part.rfind(samparkPrefix, 0) == 0) {
-                return part.substr(samparkPrefix.length());
+            const std::string ConvoXPrefix = "ConvoX_session=";
+            if (part.rfind(ConvoXPrefix, 0) == 0) {
+                return part.substr(ConvoXPrefix.length());
             }
         }
     }
@@ -48,12 +48,12 @@ std::string AuthController::extractSessionToken(const httplib::Request& req) {
 void AuthController::setSessionCookie(httplib::Response& res, const std::string& token) {
     // 7 days expiration = 604800 seconds
     std::string sameSite = "Lax";
-    if (const char* envSameSite = std::getenv("SAMPARK_COOKIE_SAMESITE")) {
+    if (const char* envSameSite = std::getenv("ConvoX_COOKIE_SAMESITE")) {
         sameSite = envSameSite;
     }
     std::string cookieVal = "connectx_session=" + token +
                             "; Path=/; Max-Age=604800; HttpOnly; SameSite=" + sameSite;
-    const char* secureEnv = std::getenv("SAMPARK_COOKIE_SECURE");
+    const char* secureEnv = std::getenv("ConvoX_COOKIE_SECURE");
     if ((secureEnv && (std::string(secureEnv) == "1" || std::string(secureEnv) == "true")) || sameSite == "None") {
         cookieVal += "; Secure";
     }
@@ -62,11 +62,11 @@ void AuthController::setSessionCookie(httplib::Response& res, const std::string&
 
 void AuthController::clearSessionCookie(httplib::Response& res) {
     std::string sameSite = "Lax";
-    if (const char* envSameSite = std::getenv("SAMPARK_COOKIE_SAMESITE")) {
+    if (const char* envSameSite = std::getenv("ConvoX_COOKIE_SAMESITE")) {
         sameSite = envSameSite;
     }
     std::string cookieVal = "connectx_session=; Path=/; Max-Age=0; HttpOnly; SameSite=" + sameSite;
-    const char* secureEnv = std::getenv("SAMPARK_COOKIE_SECURE");
+    const char* secureEnv = std::getenv("ConvoX_COOKIE_SECURE");
     if ((secureEnv && (std::string(secureEnv) == "1" || std::string(secureEnv) == "true")) || sameSite == "None") {
         cookieVal += "; Secure";
     }
@@ -90,7 +90,7 @@ void AuthController::handleRegister(const httplib::Request& req, httplib::Respon
 
     std::string clientIp = getClientIp(req);
     int rateLimit = 30;
-    if (const char* envLimit = std::getenv("SAMPARK_RATE_LIMIT_REGISTER")) {
+    if (const char* envLimit = std::getenv("ConvoX_RATE_LIMIT_REGISTER")) {
         try { rateLimit = std::stoi(envLimit); } catch (...) {}
     }
     if (!RateLimiter::getInstance().allowRequest("register:" + clientIp, rateLimit, 60)) {
@@ -161,7 +161,7 @@ void AuthController::handleLogin(const httplib::Request& req, httplib::Response&
 
     std::string clientIp = getClientIp(req);
     int rateLimit = 30;
-    if (const char* envLimit = std::getenv("SAMPARK_RATE_LIMIT_LOGIN")) {
+    if (const char* envLimit = std::getenv("ConvoX_RATE_LIMIT_LOGIN")) {
         try { rateLimit = std::stoi(envLimit); } catch (...) {}
     }
     if (!RateLimiter::getInstance().allowRequest("login:" + clientIp, rateLimit, 60)) {

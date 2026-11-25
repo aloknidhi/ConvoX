@@ -1,7 +1,7 @@
 # Phase 6 Remediation Report: Comprehensive Verification and Regression Testing
 
 **Document Version:** 1.0.0  
-**Project:** Sampark Messaging Application  
+**Project:** ConvoX Messaging Application  
 **Execution Date:** November 1, 2026  
 **Status:** Complete & 100% Passing  
 
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-Phase 6 provides comprehensive end-to-end verification across the entire Sampark system following the implementation of Phases 1 through 5. The test suite was expanded from the baseline 88 tests to **95 automated tests**, covering atomic transaction rollback, conditional attachment linking, group creation atomicity, decoupled read receipt privacy enforcement, multithreaded database concurrency under SQLite WAL mode, and server-level CSRF / rate-limiting security controls.
+Phase 6 provides comprehensive end-to-end verification across the entire ConvoX system following the implementation of Phases 1 through 5. The test suite was expanded from the baseline 88 tests to **95 automated tests**, covering atomic transaction rollback, conditional attachment linking, group creation atomicity, decoupled read receipt privacy enforcement, multithreaded database concurrency under SQLite WAL mode, and server-level CSRF / rate-limiting security controls.
 
 In addition to the C++ test suite, all 26 end-to-end HTTP integration tests passed with 100% success against the live compiled server binary, and the React/Vite frontend completed a clean production build with zero warnings or errors.
 
@@ -116,7 +116,7 @@ Executed via `powershell -ExecutionPolicy Bypass -File e2e_integration_test.ps1`
 | **Brute-Force Protection**| Unthrottled login / register | **Memory-bounded sliding-window rate limiter (HTTP 429)** |
 | **SQLite Busy Handling** | Unhandled `SQLITE_BUSY` crashes | **`sqlite3_busy_timeout(5000)` configured on database open** |
 | **Client Polling** | Rigid 2.5s/4s polling in background | **Page Visibility API throttling (10s/15s) with exponential backoff** |
-| **Container Security** | Runs as `root`, `chmod 777 uploads` | **Non-root user `sampark` (10001), `chmod 700` directories** |
+| **Container Security** | Runs as `root`, `chmod 777 uploads` | **Non-root user `ConvoX` (10001), `chmod 700` directories** |
 | **Render Persistence** | Ephemeral `free` tier (data loss) | **`starter` plan with persistent disk `/var/data` (1GB)** |
 | **CI Dependencies** | Missing `libssl-dev` in CI | **`libssl-dev` included in `.github/workflows/ci.yml`** |
 
@@ -126,4 +126,4 @@ Executed via `powershell -ExecutionPolicy Bypass -File e2e_integration_test.ps1`
 
 1. **Linux / WSL Build Environment:** The C++ backend builds natively under GCC 13+ on Ubuntu/Debian Linux with `libsqlite3-dev` and `libssl-dev`.
 2. **Reverse Proxy Configuration:** When deploying behind Cloudflare or Nginx, forward the `X-Forwarded-For` header to ensure rate limiting correctly identifies client IPs rather than proxy IPs.
-3. **Cross-Site Cookie Policy:** When frontend and backend reside on different domains (e.g., Vercel + Render), set `SAMPARK_COOKIE_SAMESITE=None` and `SAMPARK_COOKIE_SECURE=true`. For same-domain deployments, default `SameSite=Lax` is automatically applied.
+3. **Cross-Site Cookie Policy:** When frontend and backend reside on different domains (e.g., Vercel + Render), set `ConvoX_COOKIE_SAMESITE=None` and `ConvoX_COOKIE_SECURE=true`. For same-domain deployments, default `SameSite=Lax` is automatically applied.

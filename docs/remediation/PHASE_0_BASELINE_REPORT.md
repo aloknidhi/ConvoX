@@ -1,4 +1,4 @@
-# SAMPARK — PHASE 0 BASELINE INSPECTION & AUDIT REPORT
+# ConvoX — PHASE 0 BASELINE INSPECTION & AUDIT REPORT
 
 **Date:** 2026-11-01  
 **Author:** Remediation Engineering Team  
@@ -8,7 +8,7 @@
 
 ## 1. Executive Summary
 
-A comprehensive baseline inspection and audit of the **Sampark** repository was conducted across all backend services, database repositories, frontend client and components, build toolchains, deployment configurations, and test suites.
+A comprehensive baseline inspection and audit of the **ConvoX** repository was conducted across all backend services, database repositories, frontend client and components, build toolchains, deployment configurations, and test suites.
 
 The application is an end-to-end full-stack messaging platform composed of:
 - **Backend:** C++20 using `cpp-httplib` (embedded header) and `nlohmann::json` (embedded header).
@@ -29,7 +29,7 @@ Despite passing functional baseline suites under single-threaded and nominal pat
 ## 2. Repository Structure
 
 ```
-Sampark/
+ConvoX/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # GitHub Actions CI workflow
@@ -71,7 +71,7 @@ Sampark/
 │   └── Makefile                 # Dual Linux/Windows Make configuration
 ├── frontend/
 │   ├── public/
-│   │   └── sampark-logo.png
+│   │   └── ConvoX-logo.png
 │   ├── src/
 │   │   ├── api/
 │   │   │   └── client.js        # Fetch API client and error models
@@ -135,7 +135,7 @@ Sampark/
 - **Result:** **88 of 88 PASS**
 - **Output Excerpt:**
   ```
-  >>> STARTING SAMPARK BACKEND TEST SUITE <<<
+  >>> STARTING ConvoX BACKEND TEST SUITE <<<
   [PASS] Test 1: Database initialization and schema creation
   ...
   [PASS] Test 88: MessagingController handleRemoveContact: Removal over HTTP verified
@@ -188,7 +188,7 @@ Sampark/
 ### 5.2 Phase 2 — Authentication & Security Hardening
 1. **Session Token Exposure in LocalStorage (`AuthController.cpp:104, 139`, `client.js:74, 85`):**
    - JSON responses return `token: result.session->token`.
-   - Frontend explicitly saves it into `localStorage.setItem('sampark_token', ...)`.
+   - Frontend explicitly saves it into `localStorage.setItem('ConvoX_token', ...)`.
    - All subsequent requests inject `Authorization: Bearer <token>`.
    - Exposes session credentials to Cross-Site Scripting (XSS).
 2. **Missing CSRF Protection (`Server.cpp:94-139`):**

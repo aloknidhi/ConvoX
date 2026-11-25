@@ -115,7 +115,7 @@ export function LandingPage() {
                   <div className="h-4 w-px bg-border-hairline ml-1"></div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant font-mono">
-                      Sampark Desktop
+                      ConvoX Desktop
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-india-green"></span>
                   </div>
@@ -280,12 +280,12 @@ export function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <div className="bg-white px-2 py-0.5 rounded-lg border border-border-hairline shadow-xs flex items-center">
-              <img src="/sampark-logo.png" alt="Sampark" className="h-5 w-auto object-contain" />
+              <img src="/ConvoX-logo.png" alt="ConvoX" className="h-5 w-auto object-contain" />
             </div>
             <span className="text-outline">·</span>
             <span>Minimalist network chat</span>
           </div>
-          <div>© 2026 Sampark Platform. All rights reserved.</div>
+          <div>© 2026 ConvoX Platform. All rights reserved.</div>
         </div>
       </footer>
     </div>

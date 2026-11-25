@@ -309,10 +309,10 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
             Notification.permission === 'granted'
           ) {
             const lastIncoming = newOnes.filter((m) => m.senderId !== user?.id).pop();
-            const title = lastIncoming?.senderName || 'Sampark';
+            const title = lastIncoming?.senderName || 'ConvoX';
             const body = lastIncoming?.body || (lastIncoming?.attachment ? 'Sent an attachment' : 'New message');
             try {
-              new Notification(title, { body, icon: '/sampark-logo.png' });
+              new Notification(title, { body, icon: '/ConvoX-logo.png' });
             } catch {}
           }
 

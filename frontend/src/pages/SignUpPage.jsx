@@ -96,12 +96,12 @@ export function SignUpPage() {
           <div className="flex flex-col items-center text-center mb-6">
             <div className="inline-flex items-center gap-2.5 mb-2">
               <div className="bg-white px-3 py-1 rounded-xl border border-border-hairline shadow-xs flex items-center">
-                <img src="/sampark-logo.png" alt="Sampark" className="h-8 w-auto object-contain" />
+                <img src="/ConvoX-logo.png" alt="ConvoX" className="h-8 w-auto object-contain" />
               </div>
             </div>
             <h1 className="text-xl font-bold text-on-surface tracking-tight">Create your account</h1>
             <p className="text-xs text-on-surface-variant mt-1">
-              Join Sampark and start a conversation.
+              Join ConvoX and start a conversation.
             </p>
           </div>
 

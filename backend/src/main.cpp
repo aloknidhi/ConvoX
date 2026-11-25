@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
     std::cout << "========================================" << std::endl;
-    std::cout << "   Sampark Backend Server              " << std::endl;
+    std::cout << "   ConvoX Backend Server              " << std::endl;
     std::cout << "========================================" << std::endl;
 
     std::string host = "0.0.0.0";

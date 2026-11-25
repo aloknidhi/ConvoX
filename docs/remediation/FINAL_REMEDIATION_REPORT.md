@@ -1,6 +1,6 @@
-# Sampark Master Production Remediation & Engineering Hardening: Final Report
+# ConvoX Master Production Remediation & Engineering Hardening: Final Report
 
-**Project:** Sampark — Full-Stack Real-Time Messaging Application  
+**Project:** ConvoX — Full-Stack Real-Time Messaging Application  
 **Author:** DeepMind Agentic Pair Programmer  
 **Date:** November 1, 2026  
 **Repository State:** Clean, Hardened, 100% Tests Passing  
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-A comprehensive engineering remediation and hardening was performed on the **Sampark** full-stack messaging platform (C++20 backend with SQLite & `cpp-httplib`, React 18 + Vite frontend, Docker + Render + Vercel deployment).
+A comprehensive engineering remediation and hardening was performed on the **ConvoX** full-stack messaging platform (C++20 backend with SQLite & `cpp-httplib`, React 18 + Vite frontend, Docker + Render + Vercel deployment).
 
 Every applicable vulnerability identified in the repository audit across database integrity, transactional safety, session security, API resilience, frontend polling efficiency, container security, and CI infrastructure has been addressed, implemented, tested, and verified.
 
@@ -42,8 +42,8 @@ All strict preservation requirements were adhered to:
 | **Frontend** | Premature logout on transient network drops | Disentangled HTTP 401 (unauthenticated session) from network dropouts (`err.status === 0` / 5xx), preserving active user state. | Verified in `AuthContext.jsx` |
 | **Frontend** | Aggressive continuous background polling | Page Visibility API: throttles polling to 10s/15s when hidden; eager 400ms poll on tab focus; adaptive exponential backoff up to 30s. | Verified in `ChatPanel.jsx` & `DashboardPage.jsx` |
 | **Frontend** | File upload failures causing perpetual "Sending..." | Pre-flight client validation (10MB, allowlist); explicit upload error handling in composer; state reset on error allowing retry. | `npm run build` PASS |
-| **Infrastructure** | Container running as root with `chmod 777` | Created non-root user `sampark` (UID 10001); restricted permissions (`chmod 700 /var/data /var/data/uploads`); `USER sampark`. | Verified in `Dockerfile` |
-| **Infrastructure** | Render ephemeral web service (data loss) | Configured persistent disk `sampark-data` (1GB) at `/var/data`; configured `DATABASE_PATH` and `UPLOAD_DIRECTORY`. | Verified in `render.yaml` |
+| **Infrastructure** | Container running as root with `chmod 777` | Created non-root user `ConvoX` (UID 10001); restricted permissions (`chmod 700 /var/data /var/data/uploads`); `USER ConvoX`. | Verified in `Dockerfile` |
+| **Infrastructure** | Render ephemeral web service (data loss) | Configured persistent disk `ConvoX-data` (1GB) at `/var/data`; configured `DATABASE_PATH` and `UPLOAD_DIRECTORY`. | Verified in `render.yaml` |
 | **Infrastructure** | Missing CI dependency `libssl-dev` | Added `libssl-dev` to Ubuntu package installation in `.github/workflows/ci.yml`. | Verified in `ci.yml` |
 
 ---
@@ -61,7 +61,7 @@ All strict preservation requirements were adhered to:
                                │ HTTPS (SameSite Cookie + Credentials)
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 Sampark Backend (C++20)                     │
+│                 ConvoX Backend (C++20)                     │
 │                                                             │
 │  ┌───────────────────────────────────────────────────────┐  │
 │  │ Pre-Routing: CORS Validation & CSRF Protection        │  │
@@ -129,9 +129,9 @@ All strict preservation requirements were adhered to:
 1. **Persistent Storage Mount:** When deploying to Render or custom Docker hosts, ensure `/var/data` is mounted to a persistent SSD volume. The application will automatically create `/var/data/uploads` and `/var/data/connectx.db`.
 2. **Reverse Proxy Headers:** If hosted behind Cloudflare, Render, AWS ALB, or Nginx, ensure the proxy passes `X-Forwarded-For` so the C++ rate limiter correctly tracks client IP addresses.
 3. **Cookie Attributes across Domains:**
-   - Same-origin or reverse-proxied (e.g., both on `example.com`): `SAMPARK_COOKIE_SAMESITE=Lax`.
-   - Cross-domain (e.g., frontend on Vercel and backend on Render): set `SAMPARK_COOKIE_SAMESITE=None` and `SAMPARK_COOKIE_SECURE=true`.
-4. **CORS Allowlist:** Set `SAMPARK_ALLOWED_ORIGINS` to a comma-separated list of trusted frontend URLs (e.g., `https://sampark.vercel.app,https://sampark.example.com`).
+   - Same-origin or reverse-proxied (e.g., both on `example.com`): `ConvoX_COOKIE_SAMESITE=Lax`.
+   - Cross-domain (e.g., frontend on Vercel and backend on Render): set `ConvoX_COOKIE_SAMESITE=None` and `ConvoX_COOKIE_SECURE=true`.
+4. **CORS Allowlist:** Set `ConvoX_ALLOWED_ORIGINS` to a comma-separated list of trusted frontend URLs (e.g., `https://ConvoX.vercel.app,https://ConvoX.example.com`).
 
 ---
 

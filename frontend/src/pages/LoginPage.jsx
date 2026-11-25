@@ -56,8 +56,8 @@ export function LoginPage() {
               <div className="flex items-center gap-3">
                 <div className="bg-white px-2.5 py-1 rounded-xl border border-border-hairline shadow-xs flex items-center">
                   <img
-                    src="/sampark-logo.png"
-                    alt="Sampark"
+                    src="/ConvoX-logo.png"
+                    alt="ConvoX"
                     className="h-8 w-auto object-contain"
                   />
                 </div>

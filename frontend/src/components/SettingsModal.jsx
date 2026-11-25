@@ -68,7 +68,7 @@ export function SettingsModal({ isOpen, onClose }) {
             </div>
             <div>
               <h2 className="text-base font-bold text-primary">Settings & Preferences</h2>
-              <p className="text-xs text-on-surface-variant">Customize your Sampark experience</p>
+              <p className="text-xs text-on-surface-variant">Customize your ConvoX experience</p>
             </div>
           </div>
           <button
@@ -112,7 +112,7 @@ export function SettingsModal({ isOpen, onClose }) {
               <div>
                 <label className="text-xs font-bold text-primary block mb-1">Theme</label>
                 <p className="text-xs text-on-surface-variant mb-3">
-                  Choose how Sampark looks on your device.
+                  Choose how ConvoX looks on your device.
                 </p>
                 <div className="grid grid-cols-3 gap-3">
                   {[
@@ -191,7 +191,7 @@ export function SettingsModal({ isOpen, onClose }) {
                 <div className="space-y-0.5">
                   <div className="text-xs font-bold text-primary">Desktop Notifications</div>
                   <div className="text-xs text-on-surface-variant">
-                    Receive browser notifications when Sampark is in the background.
+                    Receive browser notifications when ConvoX is in the background.
                   </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">

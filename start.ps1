@@ -1,4 +1,4 @@
-# Sampark Local Host Script
+# ConvoX Local Host Script
 # Starts both the C++ backend server and the React/Vite frontend
 
 $hostAddress = "127.0.0.1"
@@ -6,7 +6,7 @@ $port = 8080
 $dbPath = "connectx.db"
 
 Write-Host "=========================================" -ForegroundColor Cyan
-Write-Host "       Sampark Local Development         " -ForegroundColor Cyan
+Write-Host "       ConvoX Local Development         " -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Cyan
 
 # 1. Build backend if server.exe does not exist

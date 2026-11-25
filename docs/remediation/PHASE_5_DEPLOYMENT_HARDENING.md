@@ -1,7 +1,7 @@
 # Phase 5 Remediation Report: Deployment, CI, and Infrastructure Hardening
 
 **Document Version:** 1.0.0  
-**Project:** Sampark Messaging Application  
+**Project:** ConvoX Messaging Application  
 **Execution Date:** November 1, 2026  
 **Status:** Complete & Verified  
 
@@ -9,11 +9,11 @@
 
 ## 1. Executive Summary
 
-Phase 5 addresses container security, cloud persistent storage architecture, CI/CD pipeline dependencies, and infrastructure integrity for Sampark.
+Phase 5 addresses container security, cloud persistent storage architecture, CI/CD pipeline dependencies, and infrastructure integrity for ConvoX.
 
 Prior to this phase, the production Docker container ran as root with wide-open permissions (`chmod 777 uploads`), Render deployment lacked persistent disk provisioning (risking database and attachment wipes upon every container restart or redeployment), and the GitHub Actions CI workflow omitted `libssl-dev`, risking build failures during native Linux compilation.
 
-Through this phase, we established a non-root container user (`sampark:10001`), restricted permissions to `700` on data and upload directories, configured a persistent 1GB disk volume in `render.yaml` with explicit mount paths, added automatic parent directory provisioning in C++, and fixed the GitHub Actions CI workflow dependencies.
+Through this phase, we established a non-root container user (`ConvoX:10001`), restricted permissions to `700` on data and upload directories, configured a persistent 1GB disk volume in `render.yaml` with explicit mount paths, added automatic parent directory provisioning in C++, and fixed the GitHub Actions CI workflow dependencies.
 
 ---
 
@@ -25,13 +25,13 @@ Through this phase, we established a non-root container user (`sampark:10001`), 
   - The upload directory was created with insecure `chmod 777 uploads` permissions.
   - Build artifacts, test databases, and local uploads could inadvertently be included in image contexts.
 - **Remediation Implemented:**
-  - In `Dockerfile`, created a dedicated, unprivileged system user and group: `sampark` with UID and GID `10001`.
-  - Configured ownership of `/app` and `/var/data` to `sampark:sampark`.
+  - In `Dockerfile`, created a dedicated, unprivileged system user and group: `ConvoX` with UID and GID `10001`.
+  - Configured ownership of `/app` and `/var/data` to `ConvoX:ConvoX`.
   - Restricted directory and executable permissions:
     - Application directory `/app`: `755`
     - Server binary `./server`: `750`
     - Persistent mount `/var/data` and upload directories: `700`
-  - Declared `USER sampark` prior to `CMD ["./server"]`.
+  - Declared `USER ConvoX` prior to `CMD ["./server"]`.
   - Hardened `.dockerignore`: explicitly excluded `.git`, `.github`, `docs/`, `uploads/`, `backend/uploads/`, `*.log`, `*.ps1`, `backend/*.db*`, `backend/*.o`, `backend/server*`, and `backend/test_suite*`.
 
 ### 2.2 Render Deployment Persistence & Disk Mounts (Phase 5.2)
@@ -42,7 +42,7 @@ Through this phase, we established a non-root container user (`sampark:10001`), 
   - Updated `render.yaml` to specify the persistent `starter` tier with an attached volume:
     ```yaml
     disk:
-      name: sampark-data
+      name: ConvoX-data
       mountPath: /var/data
       sizeGB: 1
     ```
@@ -72,9 +72,9 @@ Through this phase, we established a non-root container user (`sampark:10001`), 
 
 | Component | Path | Changes |
 |-----------|------|---------|
-| Dockerfile | `Dockerfile` | Created dedicated user `sampark` (10001); restricted file permissions (700); added `/var/data` persistence defaults. |
+| Dockerfile | `Dockerfile` | Created dedicated user `ConvoX` (10001); restricted file permissions (700); added `/var/data` persistence defaults. |
 | Docker Ignore | `.dockerignore` | Added upload paths, database artifacts, logs, and documentation to exclusion list. |
-| Render Blueprint | `render.yaml` | Added persistent disk `sampark-data` (1GB) mounted at `/var/data`; defined `DATABASE_PATH` and `UPLOAD_DIRECTORY`. |
+| Render Blueprint | `render.yaml` | Added persistent disk `ConvoX-data` (1GB) mounted at `/var/data`; defined `DATABASE_PATH` and `UPLOAD_DIRECTORY`. |
 | CI Workflow | `.github/workflows/ci.yml` | Added `libssl-dev` to apt package installation step. |
 | Database Source | `backend/src/Database.cpp` | Added automatic parent directory creation before `sqlite3_open`. |
 | Messaging Service Source | `backend/src/MessagingService.cpp` | Integrated `UPLOAD_DIRECTORY` environment variable support and safe directory creation. |

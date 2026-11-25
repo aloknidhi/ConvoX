@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="frontend/public/sampark-logo.png" alt="Sampark Logo" width="120" height="120" style="border-radius: 24px; margin-bottom: 16px;" />
+<img src="frontend/public/ConvoX-logo.png" alt="ConvoX Logo" width="120" height="120" style="border-radius: 24px; margin-bottom: 16px;" />
 
-# Sampark (सम्पर्क)
+# ConvoX (सम्पर्क)
 ### High-Performance, Privacy-First Full-Stack Messaging Platform
 
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)](https://en.cppreference.com/w/cpp/20)
@@ -24,7 +24,7 @@
 
 ## 📖 Table of Contents
 
-1. [What is Sampark?](#-what-is-sampark)
+1. [What is ConvoX?](#-what-is-ConvoX)
 2. [Key Features](#-key-features)
 3. [Visual Identity & Design System](#-visual-identity--design-system)
 4. [Full-Stack Architecture & OOP Principles](#-full-stack-architecture--oop-principles)
@@ -38,11 +38,11 @@
 
 ---
 
-## 🌟 What is Sampark?
+## 🌟 What is ConvoX?
 
-**Sampark** (*सम्पर्क*, meaning *"connection"* or *"contact"* in Hindi) is a full-stack, production-grade messaging application designed to demonstrate that modern web platforms can achieve blazingly fast response times and rock-solid memory safety without sprawling microservice overhead.
+**ConvoX** (*सम्पर्क*, meaning *"connection"* or *"contact"* in Hindi) is a full-stack, production-grade messaging application designed to demonstrate that modern web platforms can achieve blazingly fast response times and rock-solid memory safety without sprawling microservice overhead.
 
-Rather than relying on heavy application servers or managed cloud backends, Sampark combines:
+Rather than relying on heavy application servers or managed cloud backends, ConvoX combines:
 - **Bare-metal C++20 Server:** Direct execution via `cpp-httplib` and OpenSSL with sub-millisecond route resolution.
 - **Embedded SQLite3 Engine:** Thread-safe, non-destructive schema migrations, Write-Ahead Logging (WAL), and strict foreign key integrity.
 - **WhatsApp Web-Style React Frontend:** Responsive in-place split-screen messaging, instant cursor polling, rich emoji interactions, quotes, and file sharing.
@@ -91,7 +91,7 @@ Rather than relying on heavy application servers or managed cloud backends, Samp
 
 ## 🎨 Visual Identity & Design System
 
-Sampark's user interface is crafted around the **Google Stitch Indian Tricolour Design System**, balancing elegance, clarity, and national heritage:
+ConvoX's user interface is crafted around the **Google Stitch Indian Tricolour Design System**, balancing elegance, clarity, and national heritage:
 
 | Color Token | Hex Code | Purpose |
 |---|---|---|
@@ -159,7 +159,7 @@ graph TD
 
 ## 💾 Database Architecture & Schema
 
-Sampark manages 8 interconnected tables with automatic schema migrations:
+ConvoX manages 8 interconnected tables with automatic schema migrations:
 
 ```
 ┌───────────────┐        ┌──────────────────────┐        ┌───────────────────────┐
@@ -392,8 +392,8 @@ Once launched, visit **`http://localhost:5173`** in your browser. Press `Ctrl+C`
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/Sujalkan07/Sampark.git
-cd Sampark
+git clone https://github.com/aloknidhi/ConvoX.git
+cd ConvoX
 ```
 
 #### 2. Build and Run the C++ Backend
@@ -432,7 +432,7 @@ Open **`http://localhost:5173`** in your browser. All API requests made to `/api
 
 ## 🧪 Automated Testing & Verification
 
-Sampark includes two comprehensive automated test suites covering unit logic, cryptographic guarantees, and end-to-end HTTP integration:
+ConvoX includes two comprehensive automated test suites covering unit logic, cryptographic guarantees, and end-to-end HTTP integration:
 
 ### 1. Backend C++ Unit & Integration Test Suite (75 Tests)
 
@@ -517,7 +517,7 @@ dist/assets/index.js            325.66 kB
 ## 📁 Project Directory Structure
 
 ```
-Sampark/
+ConvoX/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml                       # Automated CI: C++ build, 75 unit tests & React build
@@ -560,7 +560,7 @@ Sampark/
 │       └── .gitkeep                     # Preserves upload storage directory
 ├── frontend/                            # React 18 + Vite + Tailwind CSS SPA
 │   ├── public/                          # Static public assets
-│   │   └── sampark-logo.png             # Application logo / favicon
+│   │   └── ConvoX-logo.png             # Application logo / favicon
 │   ├── src/                             # Application source code
 │   │   ├── App.jsx                      # App shell, routing & modal providers
 │   │   ├── index.css                    # Tailwind CSS directives & custom styles
@@ -568,7 +568,7 @@ Sampark/
 │   │   ├── api/                         # Backend API communication
 │   │   │   └── client.js                # Authenticated fetch wrapper
 │   │   ├── assets/                      # Bundled UI assets & icons
-│   │   │   └── sampark-logo.png         # Brand logo asset
+│   │   │   └── ConvoX-logo.png         # Brand logo asset
 │   │   ├── components/                  # Reusable UI widgets
 │   │   │   ├── AlertBanner.jsx          # Error, warning & info toast notification
 │   │   │   ├── ChatPanel.jsx            # Active conversation, composer & quotes
@@ -612,7 +612,7 @@ Sampark/
 
 ## 🔒 Security & Cryptography Highlights
 
-Sampark is built with a defense-in-depth approach to application security:
+ConvoX is built with a defense-in-depth approach to application security:
 
 - **Password Hashing:** Passwords are never stored in plaintext. They are salted using 16 bytes of cryptographically secure random bytes from OpenSSL (`RAND_bytes`) and hashed with **PBKDF2-HMAC-SHA256** across **100,000 iterations**.
 - **Constant-Time Verification:** Password hashes are compared using `CRYPTO_memcmp` to eliminate side-channel timing attack vectors.

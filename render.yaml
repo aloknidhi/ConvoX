@@ -1,13 +1,13 @@
 services:
   - type: web
-    name: sampark-backend
+    name: ConvoX-backend
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: starter
     region: singapore
     healthCheckPath: /api/health
     disk:
-      name: sampark-data
+      name: ConvoX-data
       mountPath: /var/data
       sizeGB: 1
     envVars:
@@ -17,9 +17,9 @@ services:
         value: /var/data/connectx.db
       - key: UPLOAD_DIRECTORY
         value: /var/data/uploads
-      - key: SAMPARK_COOKIE_SECURE
+      - key: ConvoX_COOKIE_SECURE
         value: "true"
-      - key: SAMPARK_COOKIE_SAMESITE
+      - key: ConvoX_COOKIE_SAMESITE
         value: "None"
-      - key: SAMPARK_ALLOWED_ORIGINS
+      - key: ConvoX_ALLOWED_ORIGINS
         sync: false

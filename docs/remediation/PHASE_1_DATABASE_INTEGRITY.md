@@ -1,7 +1,7 @@
 # Phase 1 Remediation Report: Database Integrity and Transactional Safety
 
 **Document Version:** 1.0.0  
-**Project:** Sampark Messaging Application  
+**Project:** ConvoX Messaging Application  
 **Execution Date:** November 1, 2026  
 **Status:** Complete & Verified  
 
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-Phase 1 addresses critical database integrity, transactional safety, and concurrency vulnerabilities identified in the Sampark C++ backend. The remediation eliminated data race conditions during attachment linking, guaranteed atomicity across message creation and metadata updates, rectified read receipt state representation, hardened group creation transactions, enforced unique partial indexing on direct conversations, and implemented a robust physical and metadata lifecycle for attachments.
+Phase 1 addresses critical database integrity, transactional safety, and concurrency vulnerabilities identified in the ConvoX C++ backend. The remediation eliminated data race conditions during attachment linking, guaranteed atomicity across message creation and metadata updates, rectified read receipt state representation, hardened group creation transactions, enforced unique partial indexing on direct conversations, and implemented a robust physical and metadata lifecycle for attachments.
 
 All 88 existing backend unit, regression, and migration tests continue to pass with zero regressions.
 

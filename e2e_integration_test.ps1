@@ -1,5 +1,5 @@
 Write-Host "==============================================="
-Write-Host " RUNNING SAMPARK END-TO-END HTTP API TESTS      "
+Write-Host " RUNNING ConvoX END-TO-END HTTP API TESTS      "
 Write-Host "==============================================="
 
 $port = 8085
@@ -148,9 +148,9 @@ try {
 
     # 9. Send Message 1 (Vikram to Ananya)
     Write-Host "[11/26] Testing POST /api/conversations/$convId/messages (Vikram sends Message 1)..."
-    $msg1Payload = @{ body = "Hey Ananya, welcome to Sampark!" } | ConvertTo-Json
+    $msg1Payload = @{ body = "Hey Ananya, welcome to ConvoX!" } | ConvertTo-Json
     $msg1Resp = Invoke-RestMethod -Uri "$baseUrl/api/conversations/$convId/messages" -Method Post -Body $msg1Payload -ContentType "application/json" -WebSession $session1
-    if (-not $msg1Resp.message -or $msg1Resp.message.body -ne "Hey Ananya, welcome to Sampark!") {
+    if (-not $msg1Resp.message -or $msg1Resp.message.body -ne "Hey Ananya, welcome to ConvoX!") {
         throw "Failed to send message: $($msg1Resp | ConvertTo-Json)"
     }
     $msg1Id = $msg1Resp.message.id
@@ -198,7 +198,7 @@ try {
     # 14. Phase 4: Create Group Chat (POST /api/groups)
     Write-Host "[16/26] Testing Phase 4: POST /api/groups (Vikram creates group with Ananya)..."
     $groupPayload = @{
-        name = "Sampark Core Devs"
+        name = "ConvoX Core Devs"
         description = "Engineering team coordination"
         memberIds = @($user2Id)
     } | ConvertTo-Json
@@ -251,7 +251,7 @@ try {
     Write-Host "[21/26] Testing Phase 4: POST /api/conversations/$groupId/attachments (Uploading sample text attachment)..."
     $attachPayload = @{
         fileName = "notes.txt"
-        content = "Hello Sampark Phase 4 file sharing!"
+        content = "Hello ConvoX Phase 4 file sharing!"
         mimeType = "text/plain"
     } | ConvertTo-Json
     $attachResp = Invoke-RestMethod -Uri "$baseUrl/api/conversations/$groupId/attachments" -Method Post -Body $attachPayload -ContentType "application/json" -WebSession $session1
@@ -264,7 +264,7 @@ try {
     # 20. Phase 4: Download File Attachment (GET /api/attachments/:id)
     Write-Host "[22/26] Testing Phase 4: GET /api/attachments/$attachId (Ananya downloads attachment)..."
     $downloadResp = Invoke-WebRequest -Uri "$baseUrl/api/attachments/$attachId" -Method Get -WebSession $session2 -UseBasicParsing
-    if ($downloadResp.StatusCode -ne 200 -or $downloadResp.Content -ne "Hello Sampark Phase 4 file sharing!") {
+    if ($downloadResp.StatusCode -ne 200 -or $downloadResp.Content -ne "Hello ConvoX Phase 4 file sharing!") {
         throw "Attachment download content mismatch! Got: $($downloadResp.Content)"
     }
     $dispHeader = $downloadResp.Headers["Content-Disposition"]
@@ -298,11 +298,11 @@ try {
     # 23. Phase 4: Update Group Details (PUT /api/conversations/:id)
     Write-Host "[25/26] Testing Phase 4: PUT /api/conversations/$groupId (Admin updating group name)..."
     $upGroupPayload = @{
-        name = "Sampark Core Engineers"
+        name = "ConvoX Core Engineers"
         description = "Updated engineering group"
     } | ConvertTo-Json
     $upGroupResp = Invoke-RestMethod -Uri "$baseUrl/api/conversations/$groupId" -Method Put -Body $upGroupPayload -ContentType "application/json" -WebSession $session1
-    if ($upGroupResp.conversation.name -ne "Sampark Core Engineers") {
+    if ($upGroupResp.conversation.name -ne "ConvoX Core Engineers") {
         throw "Group update failed: $($upGroupResp | ConvertTo-Json)"
     }
     Write-Host "   -> PASS: Group details updated successfully"

@@ -25,8 +25,8 @@ bool isOriginAllowed(const std::string& origin) {
         return true;
     }
 
-    // Check environment variable SAMPARK_ALLOWED_ORIGINS (comma-separated)
-    const char* envAllowed = std::getenv("SAMPARK_ALLOWED_ORIGINS");
+    // Check environment variable ConvoX_ALLOWED_ORIGINS (comma-separated)
+    const char* envAllowed = std::getenv("ConvoX_ALLOWED_ORIGINS");
     if (!envAllowed) {
         envAllowed = std::getenv("CONNECTX_ALLOWED_ORIGINS");
     }
@@ -323,7 +323,7 @@ void Server::setupRoutes() {
 }
 
 bool Server::listen(const std::string& host, int port) {
-    std::cout << "[Sampark Server] Starting on http://" << host << ":" << port << std::endl;
+    std::cout << "[ConvoX Server] Starting on http://" << host << ":" << port << std::endl;
     return svr_.listen(host, port);
 }
 

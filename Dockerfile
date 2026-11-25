@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Sampark C++ Backend Server
+# Multi-stage Dockerfile for ConvoX C++ Backend Server
 # Stage 1: Build stage
 FROM debian:bookworm-slim AS builder
 
@@ -31,8 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Create dedicated non-root application user and group
-RUN groupadd -g 10001 sampark && \
-    useradd -u 10001 -g sampark -m -s /bin/bash sampark
+RUN groupadd -g 10001 ConvoX && \
+    useradd -u 10001 -g ConvoX -m -s /bin/bash ConvoX
 
 WORKDIR /app
 
@@ -41,7 +41,7 @@ COPY --from=builder /build/backend/server ./server
 
 # Ensure upload directory and persistent mount points exist with secure permissions
 RUN mkdir -p /var/data/uploads /app/uploads && \
-    chown -R sampark:sampark /app /var/data && \
+    chown -R ConvoX:ConvoX /app /var/data && \
     chmod 755 /app && \
     chmod 750 ./server && \
     chmod 700 /var/data /var/data/uploads /app/uploads
@@ -53,7 +53,7 @@ ENV DATABASE_PATH=/var/data/connectx.db
 ENV UPLOAD_DIRECTORY=/var/data/uploads
 
 # Run as dedicated unprivileged user
-USER sampark
+USER ConvoX
 
 EXPOSE 8080
 

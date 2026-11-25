@@ -4,8 +4,8 @@
   "status": "current",
   "command": "deliver",
   "type": "workflow",
-  "input": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\.archify\\architecture-explainable-20261101-190400\\candidate.json",
-  "output": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\architecture.html",
+  "input": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\.archify\\architecture-explainable-20261101-190400\\candidate.json",
+  "output": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\architecture.html",
   "specification": {
     "sha256": "593a71236b87c9a6f8b6da644fe2050d47cf279fc67a19b38cf6cfa21eb20668",
     "bytes": 9993

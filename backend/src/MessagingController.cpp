@@ -25,9 +25,9 @@ std::string MessagingController::extractSessionToken(const httplib::Request& req
             if (part.rfind(cookiePrefix, 0) == 0) {
                 return part.substr(cookiePrefix.length());
             }
-            const std::string samparkPrefix = "sampark_session=";
-            if (part.rfind(samparkPrefix, 0) == 0) {
-                return part.substr(samparkPrefix.length());
+            const std::string ConvoXPrefix = "ConvoX_session=";
+            if (part.rfind(ConvoXPrefix, 0) == 0) {
+                return part.substr(ConvoXPrefix.length());
             }
         }
     }

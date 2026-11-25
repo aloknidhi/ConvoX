@@ -92,11 +92,11 @@ export function FindPeoplePage() {
             <div
               className="h-8 px-2 py-0.5 rounded-lg bg-white border border-border-hairline flex items-center shadow-xs cursor-pointer"
               onClick={() => navigate('/dashboard')}
-              title="Sampark Dashboard"
+              title="ConvoX Dashboard"
             >
               <img
-                src="/sampark-logo.png"
-                alt="Sampark"
+                src="/ConvoX-logo.png"
+                alt="ConvoX"
                 className="h-6 w-auto object-contain"
               />
             </div>
@@ -136,7 +136,7 @@ export function FindPeoplePage() {
             </div>
             <h1 className="text-2xl font-bold text-primary tracking-tight">Find People</h1>
             <p className="text-sm text-on-surface-variant mt-1">
-              Discover and connect with registered members on the Sampark network.
+              Discover and connect with registered members on the ConvoX network.
             </p>
           </div>
 
@@ -329,7 +329,7 @@ export function FindPeoplePage() {
                       No other registered members yet
                     </h3>
                     <p className="text-xs text-on-surface-variant max-w-md leading-relaxed">
-                      As soon as other members register on Sampark, they will automatically appear here.
+                      As soon as other members register on ConvoX, they will automatically appear here.
                     </p>
                   </>
                 )}

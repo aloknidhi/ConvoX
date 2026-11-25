@@ -6,12 +6,12 @@
   "type": "workflow",
   "quality": "showcase",
   "specification": {
-    "path": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\.archify\\workflow-system-flow-20261101-184800\\candidate.json",
+    "path": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\.archify\\workflow-system-flow-20261101-184800\\candidate.json",
     "sha256": "239bf55b81f1a47a94b1b3fd7f7607be11d5e2a35cb938fa829caff64732d2f9",
     "bytes": 10347
   },
   "artifact": {
-    "path": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\architecture.html",
+    "path": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\architecture.html",
     "sha256": "b9d8af9c01a00ffe809c76e24c2ddca0d0969c024bf4f5bcd252f7da7e48d8f3",
     "bytes": 852583
   },
@@ -28,9 +28,9 @@
     "truncated": false
   },
   "evidence": {
-    "receipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\architecture.finalize.json",
-    "summaryReceipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\architecture.finalize-summary.json",
-    "browserCheckReceipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\Sampark\\architecture.browser-check.json"
+    "receipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\architecture.finalize.json",
+    "summaryReceipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\architecture.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\sujal\\OneDrive\\Documents\\GitHub\\ConvoX\\architecture.browser-check.json"
   },
   "update": {
     "status": "current",

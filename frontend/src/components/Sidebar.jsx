@@ -30,11 +30,11 @@ export function Sidebar() {
       <aside className="fixed left-0 top-0 h-full w-[68px] bg-surface-container-lowest border-r border-border-hairline z-50 flex flex-col items-center justify-between py-5">
         {/* Top brand */}
         <div className="flex flex-col items-center w-full gap-6">
-          <NavLink to="/dashboard" className="flex flex-col items-center gap-1.5 group px-1" title="Sampark Dashboard">
+          <NavLink to="/dashboard" className="flex flex-col items-center gap-1.5 group px-1" title="ConvoX Dashboard">
             <div className="w-11 h-11 rounded-xl bg-white border border-border-hairline flex items-center justify-center p-1 shadow-xs transition-transform group-hover:scale-105 overflow-hidden">
               <img
-                src="/sampark-logo.png"
-                alt="Sampark"
+                src="/ConvoX-logo.png"
+                alt="ConvoX"
                 className="w-full h-full object-contain"
               />
             </div>

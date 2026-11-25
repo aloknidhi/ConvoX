@@ -19,7 +19,7 @@ export default defineConfig({
               });
               res.end(
                 JSON.stringify({
-                  error: 'Sampark backend server is unreachable. Please make sure the C++ backend server is running on port 8080.',
+                  error: 'ConvoX backend server is unreachable. Please make sure the C++ backend server is running on port 8080.',
                   statusCode: 503,
                 })
               );

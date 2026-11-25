@@ -36,7 +36,7 @@ async function request(endpoint, options = {}) {
       let errorMessage = data?.error || data?.message;
       if (!errorMessage) {
         if (response.status === 500 || response.status === 502 || response.status === 503 || response.status === 504) {
-          errorMessage = 'Sampark backend server is unreachable. Please ensure the C++ backend server is running on port 8080.';
+          errorMessage = 'ConvoX backend server is unreachable. Please ensure the C++ backend server is running on port 8080.';
         } else {
           errorMessage = `Request failed with status ${response.status}`;
         }
@@ -51,7 +51,7 @@ async function request(endpoint, options = {}) {
     }
     // Network / server connection failure
     throw new ApiError(
-      'Unable to connect to the Sampark server. Please check your network connection or try again.',
+      'Unable to connect to the ConvoX server. Please check your network connection or try again.',
       0,
       { originalError: error.message }
     );

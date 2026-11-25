@@ -16,8 +16,8 @@ export function Navbar() {
         <Link to="/" className="flex items-center gap-2.5 group">
           <div className="h-9 px-2 py-0.5 rounded-lg bg-white border border-border-hairline flex items-center justify-center shadow-xs">
             <img
-              src="/sampark-logo.png"
-              alt="Sampark"
+              src="/ConvoX-logo.png"
+              alt="ConvoX"
               className="h-7 w-auto object-contain transition-transform group-hover:scale-105"
             />
           </div>

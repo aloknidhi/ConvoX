@@ -8,7 +8,7 @@ using json = nlohmann::json;
 void HealthController::handleHealth(const httplib::Request&, httplib::Response& res) {
     json responseBody = {
         {"status", "ok"},
-        {"service", "sampark-backend"},
+        {"service", "ConvoX-backend"},
         {"timestamp", std::time(nullptr)}
     };
 

@@ -1,7 +1,7 @@
 # Phase 2 Remediation Report: Authentication and Security Hardening
 
 **Document Version:** 1.0.0  
-**Project:** Sampark Messaging Application  
+**Project:** ConvoX Messaging Application  
 **Execution Date:** November 1, 2026  
 **Status:** Complete & Verified  
 
@@ -18,12 +18,12 @@ All 88 backend tests passed and the React/Vite frontend builds with zero errors.
 ## 2. Identified Vulnerabilities & Implemented Solutions
 
 ### 2.1 Elimination of Session Token Exposure in `localStorage` (Phase 2.1)
-- **Vulnerability:** Previously, `AuthController::handleLogin` and `AuthController::handleRegister` returned session tokens directly inside the JSON response payload. The frontend stored these in `localStorage.setItem('sampark_token', data.token)`, exposing active session credentials to client-side JavaScript and Cross-Site Scripting (XSS) extraction.
+- **Vulnerability:** Previously, `AuthController::handleLogin` and `AuthController::handleRegister` returned session tokens directly inside the JSON response payload. The frontend stored these in `localStorage.setItem('ConvoX_token', data.token)`, exposing active session credentials to client-side JavaScript and Cross-Site Scripting (XSS) extraction.
 - **Remediation:**
   - Hardened `AuthController`: omitted session token from browser-facing JSON responses (`login` and `register`).
   - Reserved token serialization strictly for explicit programmatic API clients transmitting `X-Request-Token: true` or `X-Client-Type: api`.
   - Browser sessions are governed by `Set-Cookie: connectx_session=<token>; Path=/; Max-Age=604800; HttpOnly; SameSite=Lax`.
-  - In `frontend/src/api/client.js`, removed all `localStorage.setItem('sampark_token', ...)`, `localStorage.getItem('sampark_token')`, and `localStorage.removeItem('sampark_token')` operations.
+  - In `frontend/src/api/client.js`, removed all `localStorage.setItem('ConvoX_token', ...)`, `localStorage.getItem('ConvoX_token')`, and `localStorage.removeItem('ConvoX_token')` operations.
   - Configured `credentials: 'include'` on all `fetch` requests (including attachment multipart uploads), allowing the browser to natively and securely manage cookie transmission.
   - In `frontend/src/context/AuthContext.jsx`, updated session recovery (`checkSession`) to distinguish between an explicit HTTP 401 (unauthenticated session) and network/server connectivity interruptions (preventing premature forced logout on transient network drops).
 
@@ -34,7 +34,7 @@ All 88 backend tests passed and the React/Vite frontend builds with zero errors.
   - Inspects `Origin` header (and falls back to `Referer` origin if `Origin` is omitted).
   - Validates the origin against `isOriginAllowed(origin)`.
   - Rejects mutating requests originating from untrusted domains immediately with HTTP 403 `CSRF validation failed: untrusted origin.` before invoking any controller logic.
-  - Allows legitimate frontend origins (`http://localhost:5173`, `http://127.0.0.1:5173`, production domains via `SAMPARK_ALLOWED_ORIGINS`), as well as non-browser API clients (which do not transmit browser origin headers).
+  - Allows legitimate frontend origins (`http://localhost:5173`, `http://127.0.0.1:5173`, production domains via `ConvoX_ALLOWED_ORIGINS`), as well as non-browser API clients (which do not transmit browser origin headers).
 
 ### 2.3 Strict Request Payload and JSON Type Validation (Phase 2.3)
 - **Vulnerability:** Unchecked JSON payload parsing in `AuthController` and `MessagingController` allowed type errors (such as passing a JSON array or number when an object was expected) to trigger `nlohmann::json::type_error`. Unhandled exceptions bubbled up to generic catch blocks and returned HTTP 500 (Internal Server Error) rather than HTTP 400 (Bad Request).

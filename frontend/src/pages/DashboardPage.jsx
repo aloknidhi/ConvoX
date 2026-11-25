@@ -306,11 +306,11 @@ export function DashboardPage() {
             <div
               className="h-8 px-2 py-0.5 rounded-lg bg-white border border-border-hairline flex items-center shadow-xs cursor-pointer"
               onClick={() => navigate('/dashboard')}
-              title="Sampark Dashboard"
+              title="ConvoX Dashboard"
             >
               <img
-                src="/sampark-logo.png"
-                alt="Sampark"
+                src="/ConvoX-logo.png"
+                alt="ConvoX"
                 className="h-6 w-auto object-contain"
               />
             </div>
@@ -856,7 +856,7 @@ export function DashboardPage() {
                   </h2>
 
                   <p className="text-sm text-on-surface-variant max-w-sm mb-6 leading-relaxed">
-                    Choose someone from your chats or find a person on the Sampark network to send your first message.
+                    Choose someone from your chats or find a person on the ConvoX network to send your first message.
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -873,7 +873,7 @@ export function DashboardPage() {
                   </div>
 
                   <div className="mt-8 flex items-center gap-2 text-outline text-xs">
-                    <span>Welcome to Sampark,</span>
+                    <span>Welcome to ConvoX,</span>
                     <span className="font-semibold text-primary">{user?.fullName || user?.username}</span>
                   </div>
                 </div>
@@ -882,7 +882,7 @@ export function DashboardPage() {
                 <footer className="w-full flex items-center justify-center z-10">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-border-hairline text-xs font-medium text-on-surface-variant">
                     <span className="w-2 h-2 rounded-full bg-india-green"></span>
-                    <span>Connected to Sampark Server • Active</span>
+                    <span>Connected to ConvoX Server • Active</span>
                   </div>
                 </footer>
               </div>

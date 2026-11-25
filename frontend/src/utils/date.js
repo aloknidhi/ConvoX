@@ -1,5 +1,5 @@
 /**
- * Date and presence utilities for Sampark
+ * Date and presence utilities for ConvoX
  * Properly handles UTC timestamps stored by SQLite (datetime('now'))
  * and eliminates local timezone offset skew.
  */

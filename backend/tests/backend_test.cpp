@@ -19,7 +19,7 @@
 namespace fs = std::filesystem;
 
 void runTests() {
-    std::cout << ">>> STARTING SAMPARK BACKEND TEST SUITE <<<" << std::endl;
+    std::cout << ">>> STARTING ConvoX BACKEND TEST SUITE <<<" << std::endl;
     const std::string testDbPath = "test_connectx.db";
 
     // Clean up any existing test DB file
@@ -1196,7 +1196,7 @@ void runTests() {
         assert(httpAddContactRes.status == 200);
 
         httplib::Request getContactsReq;
-        getContactsReq.headers.emplace("Cookie", "sampark_session=" + aaravToken);
+        getContactsReq.headers.emplace("Cookie", "ConvoX_session=" + aaravToken);
         httplib::Response getContactsRes;
         controller.handleGetContacts(getContactsReq, getContactsRes);
         assert(getContactsRes.status == 200);

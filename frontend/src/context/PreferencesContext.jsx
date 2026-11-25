@@ -16,7 +16,7 @@ const DEFAULT_PREFERENCES = {
 
 function getStoredPreferences(userId) {
   try {
-    const key = userId ? `sampark_preferences_${userId}` : 'sampark_preferences_guest';
+    const key = userId ? `ConvoX_preferences_${userId}` : 'ConvoX_preferences_guest';
     const raw = localStorage.getItem(key);
     if (raw) {
       return JSON.parse(raw);
@@ -131,7 +131,7 @@ export function PreferencesProvider({ children }) {
           setPreferences(merged);
           applyTheme(serverTheme);
           try {
-            localStorage.setItem(`sampark_preferences_${user.id}`, JSON.stringify(merged));
+            localStorage.setItem(`ConvoX_preferences_${user.id}`, JSON.stringify(merged));
           } catch {}
         }
       } catch (err) {
@@ -171,7 +171,7 @@ export function PreferencesProvider({ children }) {
         applyTheme(newPrefs.theme);
       }
 
-      const storageKey = user?.id ? `sampark_preferences_${user.id}` : 'sampark_preferences_guest';
+      const storageKey = user?.id ? `ConvoX_preferences_${user.id}` : 'ConvoX_preferences_guest';
       try {
         localStorage.setItem(storageKey, JSON.stringify(mergedState));
       } catch {}
