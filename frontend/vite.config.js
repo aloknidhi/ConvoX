@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8080',
+        target: 'http://127.0.0.1:8082',
         changeOrigin: true,
         secure: false,
         configure: (proxy) => {
@@ -19,7 +19,7 @@ export default defineConfig({
               });
               res.end(
                 JSON.stringify({
-                  error: 'ConvoX backend server is unreachable. Please make sure the C++ backend server is running on port 8080.',
+                  error: 'ConvoX backend server is unreachable. Please make sure the C++ backend server is running on port 8082.',
                   statusCode: 503,
                 })
               );
