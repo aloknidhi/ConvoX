@@ -91,15 +91,15 @@ export function SignUpPage() {
         <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-saffron/5 rounded-full blur-2xl pointer-events-none"></div>
 
         {/* Central Registration Card */}
-        <div className="relative w-full max-w-[460px] bg-surface-container-lowest rounded-2xl border border-border-hairline shadow-lg p-6 sm:p-8 z-10 my-8">
+        <div className="relative w-full max-w-[460px] glass-panel border border-border-hairline/50 rounded-2xl shadow-xl p-6 sm:p-8 z-10 my-8 animate-fade-in">
           {/* Header */}
           <div className="flex flex-col items-center text-center mb-6">
             <div className="inline-flex items-center gap-2.5 mb-2">
-              <div className="bg-white px-3 py-1 rounded-xl border border-border-hairline shadow-xs flex items-center">
+              <div className="bg-surface-container-low px-3 py-1 rounded-xl border border-border-hairline/50 shadow-xs flex items-center glass-surface">
                 <img src="/ConvoX-logo.png" alt="ConvoX" className="h-8 w-auto object-contain" />
               </div>
             </div>
-            <h1 className="text-xl font-bold text-on-surface tracking-tight">Create your account</h1>
+            <h1 className="text-xl font-bold text-primary tracking-tight">Create your account</h1>
             <p className="text-xs text-on-surface-variant mt-1">
               Join ConvoX and start a conversation.
             </p>
@@ -131,7 +131,7 @@ export function SignUpPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Aarav Sharma"
                 disabled={loading}
-                className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm px-3.5 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                className="w-full input-glass text-on-surface text-sm px-3.5 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
               />
             </div>
 
@@ -157,7 +157,7 @@ export function SignUpPage() {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="aarav_sharma"
                   disabled={loading}
-                  className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-8 pr-3.5 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none font-mono transition-all placeholder:text-outline/70"
+                  className="w-full input-glass text-on-surface text-sm pl-8 pr-3.5 py-2.5 rounded-xl focus:border-secondary focus:outline-none font-mono transition-all placeholder:text-outline/70"
                 />
               </div>
             </div>
@@ -179,7 +179,7 @@ export function SignUpPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="aarav@example.com"
                   disabled={loading}
-                  className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-9 pr-3.5 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                  className="w-full input-glass text-on-surface text-sm pl-9 pr-3.5 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
                 />
               </div>
             </div>
@@ -198,7 +198,7 @@ export function SignUpPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minimum 8 characters"
                   disabled={loading}
-                  className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-3.5 pr-10 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                  className="w-full input-glass text-on-surface text-sm pl-3.5 pr-10 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
                 />
                 <button
                   type="button"
@@ -216,24 +216,16 @@ export function SignUpPage() {
               {password && (
                 <div className="flex items-center gap-1.5 pt-1">
                   <div
-                    className={`h-1 flex-1 rounded-full transition-colors ${
-                      strengthScore >= 1 ? 'bg-india-green' : 'bg-surface-container-highest'
-                    }`}
+                    className={`h-1 flex-1 rounded-full transition-colors ${strengthScore >= 1 ? 'bg-india-green' : 'bg-surface-container-highest'}`}
                   ></div>
                   <div
-                    className={`h-1 flex-1 rounded-full transition-colors ${
-                      strengthScore >= 2 ? 'bg-india-green' : 'bg-surface-container-highest'
-                    }`}
+                    className={`h-1 flex-1 rounded-full transition-colors ${strengthScore >= 2 ? 'bg-india-green' : 'bg-surface-container-highest'}`}
                   ></div>
                   <div
-                    className={`h-1 flex-1 rounded-full transition-colors ${
-                      strengthScore >= 3 ? 'bg-india-green' : 'bg-surface-container-highest'
-                    }`}
+                    className={`h-1 flex-1 rounded-full transition-colors ${strengthScore >= 3 ? 'bg-india-green' : 'bg-surface-container-highest'}`}
                   ></div>
                   <div
-                    className={`h-1 flex-1 rounded-full transition-colors ${
-                      strengthScore >= 4 ? 'bg-india-green' : 'bg-surface-container-highest'
-                    }`}
+                    className={`h-1 flex-1 rounded-full transition-colors ${strengthScore >= 4 ? 'bg-india-green' : 'bg-surface-container-highest'}`}
                   ></div>
                   <span className="text-[10px] font-mono text-on-surface-variant pl-1">
                     {strengthScore <= 1 ? 'Weak' : strengthScore <= 3 ? 'Medium' : 'Strong'}
@@ -250,9 +242,7 @@ export function SignUpPage() {
                 </label>
                 {confirmPassword && (
                   <span
-                    className={`text-[10px] font-mono ${
-                      passwordsMatch ? 'text-india-green' : 'text-error'
-                    }`}
+                    className={`text-[10px] font-mono ${passwordsMatch ? 'text-india-green' : 'text-error'}`}
                   >
                     {passwordsMatch ? 'Passwords match' : 'Passwords do not match'}
                   </span>
@@ -267,7 +257,7 @@ export function SignUpPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Re-enter password"
                   disabled={loading}
-                  className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-3.5 pr-10 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                  className="w-full input-glass text-on-surface text-sm pl-3.5 pr-10 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
                 />
                 <button
                   type="button"
@@ -319,7 +309,7 @@ export function SignUpPage() {
           </form>
 
           {/* Bottom link to Login */}
-          <div className="mt-6 pt-5 border-t border-border-hairline text-center text-xs text-on-surface-variant">
+          <div className="mt-6 pt-5 border-t border-border-hairline/50 text-center text-xs text-on-surface-variant">
             Already have an account?{' '}
             <Link to="/login" className="font-semibold text-primary hover:underline">
               Log In

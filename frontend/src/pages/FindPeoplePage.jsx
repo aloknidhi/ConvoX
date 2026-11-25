@@ -39,7 +39,6 @@ export function FindPeoplePage() {
     }
   }, []);
 
-  // Debounced search effect
   // Fetch contacts on mount
   useEffect(() => {
     api.getContacts()
@@ -49,6 +48,7 @@ export function FindPeoplePage() {
       .catch(() => {});
   }, []);
 
+  // Debounced search effect
   useEffect(() => {
     let ignore = false;
     const timer = setTimeout(() => {
@@ -87,38 +87,35 @@ export function FindPeoplePage() {
 
       <div className="pl-[68px] flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top Header */}
-        <header className="h-14 bg-surface-container-lowest border-b border-border-hairline z-40 flex items-center justify-between px-6 shrink-0 transition-colors">
+        <header className="h-14 glass-panel border-b border-border-hairline/50 z-40 flex items-center justify-between px-6 shrink-0 shadow-sm backdrop-blur">
           <div className="flex items-center gap-3">
-            <div
-              className="h-8 px-2 py-0.5 rounded-lg bg-white border border-border-hairline flex items-center shadow-xs cursor-pointer"
+            <button
+              type="button"
               onClick={() => navigate('/dashboard')}
               title="ConvoX Dashboard"
+              className="glass-surface w-8 h-8 rounded-lg flex items-center justify-center border border-border-hairline/50 hover:bg-surface-container-low transition-colors shadow-xs"
             >
-              <img
-                src="/ConvoX-logo.png"
-                alt="ConvoX"
-                className="h-6 w-auto object-contain"
-              />
-            </div>
-            <span className="text-outline/50">•</span>
+              <img src="/ConvoX-logo.png" alt="ConvoX" className="h-6 w-auto object-contain" />
+            </button>
+            <span className="text-outline/50 h-4 w-px bg-border-hairline"></span>
             <span className="text-sm font-medium text-on-surface-variant">Find People</span>
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Quick Theme Toggle Button */}
+            {/* Theme Toggle */}
             <button
               type="button"
               onClick={toggleTheme}
               title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="w-8 h-8 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center cursor-pointer shadow-xs active:scale-95"
+              className="w-8 h-8 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-all shadow-xs active:scale-95"
             >
-              <span className={`material-symbols-outlined text-[19px] ${isDarkMode ? 'text-amber-400' : 'text-slate-700'}`}>
+              <span className={`material-symbols-outlined text-[19px] ${isDarkMode ? 'text-india-green' : 'text-secondary'}`}>
                 {isDarkMode ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
 
-            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-semibold shadow-xs">
+            <div className="w-8 h-8 rounded-full glass-surface border border-border-hairline/50 flex items-center justify-center text-xs font-semibold shadow-xs text-on-surface">
               {(user?.fullName || user?.username || 'U')[0].toUpperCase()}
             </div>
           </div>
@@ -142,7 +139,7 @@ export function FindPeoplePage() {
 
           {/* Search Bar */}
           <div className="relative w-full mb-6">
-            <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">
+            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none">
               search
             </span>
             <input
@@ -150,7 +147,7 @@ export function FindPeoplePage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by name or @username..."
-              className="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest text-sm text-on-surface placeholder:text-outline rounded-xl border border-border-hairline focus:border-secondary focus:outline-none shadow-xs transition-all"
+              className="input-glass w-full pl-10 pr-10 py-2.5 text-sm text-on-surface placeholder:text-outline/70 rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none shadow-xs transition-all"
             />
             {searchQuery && (
               <button
@@ -164,33 +161,23 @@ export function FindPeoplePage() {
             )}
           </div>
 
-          {/* Action Notice Modal / Banner */}
+          {/* Action Notice Banner */}
           {notice && (
             <div className="mb-6">
-              <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-start justify-between gap-3 shadow-xs">
-                <div className="flex items-start gap-2.5">
-                  <span className="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">
-                    info
-                  </span>
-                  <div>
-                    <p className="font-semibold">{notice}</p>
-                    <button
-                      type="button"
-                      onClick={() => navigate('/dashboard')}
-                      className="text-secondary hover:underline font-semibold mt-1 inline-block"
-                    >
-                      View Messages in Dashboard →
-                    </button>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setNotice(null)}
-                  className="text-blue-700 hover:text-blue-900 font-bold p-1"
-                >
-                  ×
-                </button>
-              </div>
+              <AlertBanner type="success" message={notice} onClose={() => setNotice(null)} />
+            </div>
+          )}
+
+          {/* Error Banner */}
+          {error && (
+            <div className="mb-4">
+              <AlertBanner type="error" message={error} onClose={() => setError(null)} />
+              <button
+                onClick={() => fetchUsers(searchQuery)}
+                className="mt-2 text-xs font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                Retry search
+              </button>
             </div>
           )}
 
@@ -199,10 +186,10 @@ export function FindPeoplePage() {
             <h2 className="text-xs font-semibold uppercase tracking-wider text-outline mb-3">
               Your Profile
             </h2>
-            <div className="p-4 rounded-xl bg-surface-container-lowest border border-border-hairline shadow-xs flex items-center justify-between">
+            <div className="glass-card p-4 rounded-xl border border-border-hairline/50 shadow-xs flex items-center justify-between">
               <div className="flex items-center gap-3.5">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm shadow-xs">
+                  <div className="w-12 h-12 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm shadow-sm">
                     {(user?.fullName || user?.username || 'U')
                       .split(' ')
                       .map((n) => n[0])
@@ -216,7 +203,7 @@ export function FindPeoplePage() {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-primary">{user?.fullName}</span>
                     <span className="text-xs font-mono text-outline">@{user?.username}</span>
-                    <span className="px-2 py-0.5 rounded-full bg-saffron/15 text-saffron text-[10px] font-semibold">
+                    <span className="px-2 py-0.5 rounded-full bg-india-green/10 text-india-green text-[10px] font-semibold border border-india-green/20">
                       You
                     </span>
                   </div>
@@ -235,14 +222,15 @@ export function FindPeoplePage() {
                 <button
                   type="button"
                   onClick={() => setSelfProfileOpen(true)}
-                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-surface-container-high hover:bg-surface-container text-primary border border-border-hairline transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-primary transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[16px]">edit</span>
                   <span>Edit Profile</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => navigate('/dashboard')}
-                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-surface-container-low hover:bg-surface-container text-primary border border-border-hairline transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-primary transition-colors shadow-xs cursor-pointer"
                 >
                   Back to Chats
                 </button>
@@ -251,7 +239,7 @@ export function FindPeoplePage() {
           </div>
 
           {/* Discovered Users Section */}
-          <div className="mb-6">
+          <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-xs font-semibold uppercase tracking-wider text-outline">
                 Registered Members
@@ -263,31 +251,11 @@ export function FindPeoplePage() {
               )}
             </div>
 
-            {/* Error State */}
-            {error && (
-              <div className="mb-4">
-                <AlertBanner
-                  type="error"
-                  message={error}
-                  onClose={() => setError(null)}
-                />
-                <button
-                  onClick={() => fetchUsers(searchQuery)}
-                  className="mt-2 text-xs font-semibold text-secondary hover:underline"
-                >
-                  Click here to retry
-                </button>
-              </div>
-            )}
-
             {/* Loading State: Skeletons */}
             {loading && (
               <div className="space-y-3">
                 {[1, 2, 3].map((n) => (
-                  <div
-                    key={n}
-                    className="p-4 rounded-xl bg-surface-container-lowest border border-border-hairline flex items-center justify-between animate-pulse"
-                  >
+                  <div key={n} className="glass-card p-4 rounded-xl border border-border-hairline/50 flex items-center justify-between shadow-xs">
                     <div className="flex items-center gap-3">
                       <div className="w-11 h-11 rounded-full bg-surface-container-high"></div>
                       <div className="space-y-2">
@@ -303,8 +271,8 @@ export function FindPeoplePage() {
 
             {/* Empty State: No results */}
             {!loading && !error && users.length === 0 && (
-              <div className="p-8 rounded-2xl bg-surface-container-low border border-border-hairline text-center flex flex-col items-center">
-                <div className="w-12 h-12 rounded-2xl bg-surface-container-lowest border border-border-hairline flex items-center justify-center text-primary mb-3 shadow-xs">
+              <div className="glass-card p-8 rounded-2xl border border-border-hairline/50 shadow-xs text-center flex flex-col items-center">
+                <div className="w-12 h-12 rounded-2xl glass-surface border border-border-hairline/50 flex items-center justify-center text-primary mb-3 shadow-xs">
                   <span className="material-symbols-outlined text-[24px]">person_search</span>
                 </div>
                 {searchQuery ? (
@@ -318,7 +286,7 @@ export function FindPeoplePage() {
                     <button
                       type="button"
                       onClick={() => setSearchQuery('')}
-                      className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-surface-container-lowest border border-border-hairline hover:bg-surface-container text-primary transition-colors shadow-xs"
+                      className="px-3.5 py-1.5 text-xs font-semibold rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-primary transition-colors shadow-xs"
                     >
                       Clear Search
                     </button>
@@ -352,7 +320,7 @@ export function FindPeoplePage() {
                   return (
                     <div
                       key={peer.id}
-                      className="p-4 rounded-xl bg-surface-container-lowest border border-border-hairline hover:border-border-hairline/80 shadow-xs hover:shadow-sm transition-all flex items-center justify-between"
+                      className="glass-card p-4 rounded-xl border border-border-hairline/50 hover:border-border-hairline/80 shadow-xs hover:shadow-md transition-all flex items-center justify-between"
                     >
                       <div
                         className="flex items-center gap-3.5 min-w-0 cursor-pointer group/peer"
@@ -396,7 +364,7 @@ export function FindPeoplePage() {
                                 setError(err.message || 'Failed to remove contact.');
                               }
                             }}
-                            className="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-error/10 hover:text-error text-on-surface-variant text-xs font-semibold flex items-center gap-1 border border-border-hairline transition-all cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant text-xs font-semibold flex items-center gap-1 shadow-xs transition-all cursor-pointer"
                             title="Remove from Contacts"
                           >
                             <span className="material-symbols-outlined text-[15px] text-india-green">check_circle</span>
@@ -413,7 +381,7 @@ export function FindPeoplePage() {
                                 setError(err.message || 'Failed to add contact.');
                               }
                             }}
-                            className="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant text-xs font-semibold flex items-center gap-1 border border-border-hairline transition-all cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant text-xs font-semibold flex items-center gap-1 shadow-xs transition-all cursor-pointer"
                             title="Add to Contacts"
                           >
                             <span className="material-symbols-outlined text-[15px]">person_add</span>
@@ -424,7 +392,7 @@ export function FindPeoplePage() {
                         <button
                           type="button"
                           onClick={() => setViewingPeerId(peer.id)}
-                          className="px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant text-xs font-semibold flex items-center gap-1 border border-border-hairline transition-all cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant text-xs font-semibold flex items-center gap-1 shadow-xs transition-all cursor-pointer"
                           title="View Profile"
                         >
                           <span className="material-symbols-outlined text-[15px]">badge</span>

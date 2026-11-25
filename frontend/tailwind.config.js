@@ -24,13 +24,12 @@ export default {
         'primary-hover': 'rgb(var(--primary-hover) / <alpha-value>)',
         'primary-container': 'rgb(var(--primary-container) / <alpha-value>)',
         'on-primary': '#FFFFFF',
-        saffron: '#F58220',
-        'saffron-hover': '#E07519',
-        'india-green': '#138808',
         secondary: 'rgb(var(--secondary) / <alpha-value>)',
         'secondary-hover': 'rgb(var(--secondary-hover) / <alpha-value>)',
         error: 'rgb(var(--error) / <alpha-value>)',
         'error-container': 'rgb(var(--error-container) / <alpha-value>)',
+        'india-green': '#138808',
+        saffron: '#FF9933',
       },
       fontFamily: {
         sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
@@ -43,7 +42,41 @@ export default {
         "space-lg": "1.25rem",
         "space-xl": "2rem",
       },
+      animation: {
+        'fade-in': 'fadeIn 0.35s ease-out both',
+        'slide-up': 'slideUp 0.4s ease-out both',
+        'slide-in-right': 'slideInRight 0.35s ease-out both',
+        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideInRight: {
+          '0%': { opacity: '0', transform: 'translateX(16px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.55' },
+        },
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        DEFAULT: '16px',
+        md: '20px',
+        lg: '28px',
+      },
+      transitionTimingFunction: {
+        'glass': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+      },
     },
   },
   plugins: [],
-}
+};

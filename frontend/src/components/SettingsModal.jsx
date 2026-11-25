@@ -54,16 +54,59 @@ export function SettingsModal({ isOpen, onClose }) {
     }
   };
 
+  const toggleAppearanceSection = (id) => {
+    const updates = { theme: id };
+    updatePreferences(updates);
+  };
+
+  const themeOptions = [
+    { id: 'light', label: 'Light', icon: 'light_mode', desc: 'Clean & crisp' },
+    { id: 'dark', label: 'Dark', icon: 'dark_mode', desc: 'Deep slate tones' },
+    { id: 'system', label: 'System', icon: 'settings_brightness', desc: 'Sync with OS' },
+  ];
+
+  const toggleGroup = ({ label, desc, checked, onChange, testAction }) => (
+    <div className="glass-card p-3.5 rounded-xl border border-border-hairline/50 shadow-xs flex items-center justify-between">
+      <div className="space-y-0.5">
+        <div className="text-xs font-bold text-primary">{label}</div>
+        <div className="text-xs text-on-surface-variant">{desc}</div>
+      </div>
+      <div className="flex items-center gap-3 shrink-0">
+        {testAction && (
+          <button
+            type="button"
+            onClick={testAction}
+            className="px-2.5 py-1 text-[11px] font-semibold text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg border border-border-hairline/50 transition-colors shadow-xs cursor-pointer"
+            title="Test"
+          >
+            Test
+          </button>
+        )}
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={onChange}
+            className="sr-only peer"
+          />
+          <div className="w-9 h-5 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-india-green peer-checked:border-transparent peer-focus:outline-none">
+            <span className="absolute top-0.5 left-0.5 h-3 w-3 bg-surface-container-lowest rounded-full shadow-sm ring ring-surface-container-highest transition-all peer-checked:translate-x-full peer-checked:ring-india-green/40" />
+          </div>
+        </label>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-xl bg-surface-container-lowest border border-border-hairline rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[85vh]"
+        className="w-full max-w-xl glass-panel border border-border-hairline/50 rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[85vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-border-hairline flex items-center justify-between bg-surface-container-low/30">
+        <div className="px-6 py-4 border-b border-border-hairline/50 flex items-center justify-between glass-surface">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+            <div className="w-8 h-8 rounded-xl glass-surface border border-border-hairline/50 flex items-center justify-center text-primary shadow-xs">
               <span className="material-symbols-outlined text-[20px]">settings</span>
             </div>
             <div>
@@ -73,7 +116,7 @@ export function SettingsModal({ isOpen, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors shadow-xs cursor-pointer"
             type="button"
           >
             <span className="material-symbols-outlined text-[18px]">close</span>
@@ -81,7 +124,7 @@ export function SettingsModal({ isOpen, onClose }) {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-border-hairline bg-surface-container-lowest px-6 pt-2 gap-1 overflow-x-auto">
+        <div className="flex border-b border-border-hairline/50 bg-surface-container-lowest px-6 pt-2 gap-1 overflow-x-auto">
           {[
             { id: 'appearance', label: 'Appearance', icon: 'palette' },
             { id: 'notifications', label: 'Notifications', icon: 'notifications' },
@@ -94,7 +137,7 @@ export function SettingsModal({ isOpen, onClose }) {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-semibold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'border-saffron text-primary font-bold'
+                  ? 'border-india-green text-primary font-bold'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
               }`}
             >
@@ -115,33 +158,25 @@ export function SettingsModal({ isOpen, onClose }) {
                   Choose how ConvoX looks on your device.
                 </p>
                 <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { id: 'light', label: 'Light', icon: 'light_mode', desc: 'Clean & crisp' },
-                    { id: 'dark', label: 'Dark', icon: 'dark_mode', desc: 'Deep slate tones' },
-                    { id: 'system', label: 'System', icon: 'settings_brightness', desc: 'Sync with OS' },
-                  ].map((themeOpt) => {
+                  {themeOptions.map((themeOpt) => {
                     const isSelected = preferences.theme === themeOpt.id;
                     return (
                       <button
                         key={themeOpt.id}
                         type="button"
-                        onClick={() => updatePreferences({ theme: themeOpt.id })}
+                        onClick={() => toggleAppearanceSection(themeOpt.id)}
                         className={`p-3.5 rounded-xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between h-24 ${
                           isSelected
-                            ? 'border-saffron bg-saffron/10 shadow-xs ring-1 ring-saffron/30'
-                            : 'border-border-hairline bg-surface-container-lowest hover:bg-surface-container-low'
+                            ? 'border-india-green bg-india-green/10 shadow-xs ring-1 ring-india-green/20'
+                            : 'border-border-hairline/50 bg-surface-container-lowest hover:bg-surface-container-low'
                         }`}
                       >
                         <div className="flex items-center justify-between w-full">
-                          <span
-                            className={`material-symbols-outlined text-[20px] ${
-                              isSelected ? 'text-saffron' : 'text-outline'
-                            }`}
-                          >
+                          <span className={`material-symbols-outlined text-[20px] ${isSelected ? 'text-india-green' : 'text-outline'}`}>
                             {themeOpt.icon}
                           </span>
                           {isSelected && (
-                            <span className="w-2 h-2 rounded-full bg-saffron"></span>
+                            <span className="w-2 h-2 rounded-full bg-india-green"></span>
                           )}
                         </div>
                         <div>
@@ -159,74 +194,31 @@ export function SettingsModal({ isOpen, onClose }) {
           {/* TAB 2: NOTIFICATIONS */}
           {activeTab === 'notifications' && (
             <div className="space-y-5">
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/50 border border-border-hairline">
-                <div className="space-y-0.5">
-                  <div className="text-xs font-bold text-primary">Message Sounds</div>
-                  <div className="text-xs text-on-surface-variant">
-                    Play a gentle chime when a new message arrives.
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => playNotificationChime()}
-                    className="px-2.5 py-1 text-[11px] font-semibold text-secondary hover:bg-surface-container rounded-md border border-border-hairline transition-colors cursor-pointer"
-                    title="Preview Chime"
-                  >
-                    Test
-                  </button>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.sound_enabled}
-                      onChange={(e) => updatePreferences({ sound_enabled: e.target.checked })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-saffron"></div>
-                  </label>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/50 border border-border-hairline">
-                <div className="space-y-0.5">
-                  <div className="text-xs font-bold text-primary">Desktop Notifications</div>
-                  <div className="text-xs text-on-surface-variant">
-                    Receive browser notifications when ConvoX is in the background.
-                  </div>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={preferences.desktop_notifications_enabled}
-                    onChange={handleRequestNotificationPermission}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-saffron"></div>
-                </label>
-              </div>
+              {toggleGroup({
+                label: 'Message Sounds',
+                desc: 'Play a gentle chime when a new message arrives.',
+                checked: preferences.sound_enabled,
+                onChange: (e) => updatePreferences({ sound_enabled: e.target.checked }),
+                testAction: () => playNotificationChime(),
+              })}
+              {toggleGroup({
+                label: 'Desktop Notifications',
+                desc: 'Receive browser notifications when ConvoX is in the background.',
+                checked: preferences.desktop_notifications_enabled,
+                onChange: handleRequestNotificationPermission,
+              })}
             </div>
           )}
 
           {/* TAB 3: PRIVACY */}
           {activeTab === 'privacy' && (
             <div className="space-y-5">
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/50 border border-border-hairline">
-                <div className="space-y-0.5 max-w-sm">
-                  <div className="text-xs font-bold text-primary">Read Receipts</div>
-                  <div className="text-xs text-on-surface-variant leading-relaxed">
-                    Show blue checkmarks when messages have been seen. When disabled, you will neither send nor receive read confirmations.
-                  </div>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0 ml-4">
-                  <input
-                    type="checkbox"
-                    checked={preferences.read_receipts_enabled}
-                    onChange={(e) => updatePreferences({ read_receipts_enabled: e.target.checked })}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-saffron"></div>
-                </label>
-              </div>
+              {toggleGroup({
+                label: 'Read Receipts',
+                desc: 'Show blue checkmarks when messages have been seen. When disabled, you will neither send nor receive read confirmations.',
+                checked: preferences.read_receipts_enabled,
+                onChange: (e) => updatePreferences({ read_receipts_enabled: e.target.checked }),
+              })}
             </div>
           )}
 
@@ -234,14 +226,10 @@ export function SettingsModal({ isOpen, onClose }) {
           {activeTab === 'profile' && (
             <form onSubmit={handleSaveProfile} className="space-y-4">
               {profileMessage && (
-                <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/25 text-xs text-india-green dark:text-emerald-400 font-semibold">
-                  {profileMessage}
-                </div>
+                <AlertBanner type="success" message={profileMessage} onClose={() => setProfileMessage(null)} />
               )}
               {profileError && (
-                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/25 text-xs text-error dark:text-red-400 font-semibold">
-                  {profileError}
-                </div>
+                <AlertBanner type="error" message={profileError} onClose={() => setProfileError(null)} />
               )}
 
               <div>
@@ -250,7 +238,7 @@ export function SettingsModal({ isOpen, onClose }) {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-lg border border-border-hairline focus:border-secondary outline-none transition-all"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                   placeholder="Your Full Name"
                 />
               </div>
@@ -261,7 +249,7 @@ export function SettingsModal({ isOpen, onClose }) {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-lg border border-border-hairline focus:border-secondary outline-none transition-all resize-none"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all resize-none shadow-xs placeholder:text-outline/70"
                   placeholder="Write a few words about yourself..."
                 />
               </div>
@@ -281,7 +269,7 @@ export function SettingsModal({ isOpen, onClose }) {
                 <button
                   type="submit"
                   disabled={profileSaving}
-                  className="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-lg shadow-xs cursor-pointer transition-colors disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold shadow-xs cursor-pointer transition-colors disabled:opacity-50"
                 >
                   {profileSaving ? 'Saving...' : 'Save Changes'}
                 </button>
@@ -291,11 +279,11 @@ export function SettingsModal({ isOpen, onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-border-hairline bg-surface-container-low/20 flex justify-end">
+        <div className="px-6 py-3 border-t border-border-hairline/50 glass-surface flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 text-xs font-semibold text-primary hover:bg-surface-container rounded-lg border border-border-hairline transition-colors cursor-pointer"
+            className="px-4 py-1.5 text-xs font-semibold text-primary hover:bg-surface-container-low rounded-lg border border-border-hairline/50 transition-colors shadow-xs cursor-pointer"
           >
             Done
           </button>

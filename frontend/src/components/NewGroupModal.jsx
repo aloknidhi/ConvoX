@@ -85,17 +85,17 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-md bg-surface-container-lowest border border-border-hairline rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden text-on-surface"
+        className="w-full max-w-md glass-panel border border-border-hairline/50 rounded-2xl shadow-xl flex flex-col max-h-[90vh] overflow-hidden"
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-group-modal-title"
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-border-hairline flex items-center justify-between shrink-0">
+        <div className="px-6 py-4 border-b border-border-hairline/50 flex items-center justify-between shrink-0 glass-surface">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl glass-surface border border-border-hairline/50 flex items-center justify-center text-primary shadow-xs">
               <span className="material-symbols-outlined text-[19px]">group_add</span>
             </div>
             <div>
@@ -108,16 +108,16 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors shadow-xs cursor-pointer"
             aria-label="Close"
           >
-            ✕
+            <span className="material-symbols-outlined text-[18px]">close</span>
           </button>
         </div>
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden">
-          <div className="p-6 space-y-4 overflow-y-auto flex-1 custom-scrollbar">
+          <div className="p-6 space-y-4 overflow-y-auto flex-1">
             {error && <AlertBanner type="error" message={error} onClose={() => setError(null)} />}
 
             {/* Group Name */}
@@ -132,7 +132,7 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
                 placeholder="e.g. Engineering Core Team"
                 maxLength={100}
                 required
-                className="w-full px-3 py-2 text-xs rounded-xl bg-surface-container-low border border-border-hairline focus:border-secondary focus:bg-surface-container-lowest outline-none transition-all placeholder:text-outline"
+                className="input-glass w-full px-3 py-2 text-xs rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                 autoFocus
               />
               <div className="text-[10px] text-outline font-mono text-right mt-0.5">
@@ -151,7 +151,7 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
                 placeholder="What is this group about?"
                 maxLength={500}
                 rows={2}
-                className="w-full px-3 py-2 text-xs rounded-xl bg-surface-container-low border border-border-hairline focus:border-secondary focus:bg-surface-container-lowest outline-none transition-all placeholder:text-outline resize-none"
+                className="input-glass w-full px-3 py-2 text-xs rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all resize-none shadow-xs placeholder:text-outline/70"
               />
             </div>
 
@@ -176,12 +176,12 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Filter people..."
-                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-surface-container-low border border-border-hairline focus:border-secondary outline-none placeholder:text-outline"
+                  className="input-glass w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none shadow-xs placeholder:text-outline/70"
                 />
               </div>
 
               {/* User List */}
-              <div className="border border-border-hairline rounded-xl max-h-48 overflow-y-auto divide-y divide-border-hairline/60 bg-surface-container-low/30">
+              <div className="border border-border-hairline/50 rounded-xl max-h-48 overflow-y-auto divide-y divide-border-hairline/60 shadow-xs">
                 {loadingUsers ? (
                   <div className="py-6 text-center text-xs text-outline flex items-center justify-center gap-2">
                     <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
@@ -199,11 +199,11 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
                         key={u.id}
                         onClick={() => toggleUserSelection(u.id)}
                         className={`px-3 py-2 flex items-center justify-between cursor-pointer transition-colors ${
-                          isSelected ? 'bg-secondary/5 font-medium' : 'hover:bg-surface-container'
+                          isSelected ? 'bg-surface-container-low font-medium' : 'hover:bg-surface-container-low'
                         }`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                          <div className="w-7 h-7 rounded-full bg-primary-container text-white flex items-center justify-center text-[10px] font-bold shrink-0 shadow-xs">
                             {(u.fullName || u.username)[0].toUpperCase()}
                           </div>
                           <div className="truncate text-xs">
@@ -227,12 +227,12 @@ export function NewGroupModal({ isOpen, onClose, onGroupCreated }) {
           </div>
 
           {/* Footer Actions */}
-          <div className="px-6 py-3.5 bg-surface-container-low border-t border-border-hairline flex items-center justify-end gap-3 shrink-0">
+          <div className="px-6 py-3.5 border-t border-border-hairline/50 glass-surface flex items-center justify-end gap-3 shrink-0 shadow-sm">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="px-4 py-2 text-xs font-semibold rounded-xl hover:bg-surface-container text-on-surface-variant transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold rounded-xl hover:bg-surface-container-low text-on-surface-variant transition-colors shadow-xs cursor-pointer disabled:opacity-50"
             >
               Cancel
             </button>

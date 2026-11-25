@@ -718,7 +718,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
   return (
     <div className="flex-1 flex flex-col h-full bg-surface min-w-0 overflow-hidden relative">
       {/* Top Header */}
-      <header className="h-16 px-4 sm:px-6 bg-surface-container-lowest border-b border-border-hairline z-10 shrink-0 shadow-xs flex items-center justify-between">
+      <header className="h-16 px-4 sm:px-6 glass-panel border-b border-border-hairline/50 z-10 shrink-0 flex items-center justify-between">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onBack || (() => navigate('/dashboard'))}
@@ -836,7 +836,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
             {chatMenuOpen && (
               <div
                 ref={chatMenuRef}
-                className="absolute right-0 top-11 w-48 bg-surface-container-lowest border border-border-hairline rounded-xl shadow-xl py-1 z-30 animate-fade-in text-xs"
+                className="absolute right-0 top-11 w-48 glass-panel border border-border-hairline/50 rounded-xl shadow-xl py-1 z-30 animate-fade-in text-xs"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -861,7 +861,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                         setModalError(null);
                         setConfirmModal({ type: 'remove_contact' });
                       }}
-                      className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container text-on-surface transition-colors cursor-pointer"
+                      className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container-low/50 text-on-surface transition-colors cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-[18px]">person_remove</span>
                       <span>Remove contact</span>
@@ -873,7 +873,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                         setChatMenuOpen(false);
                         handleAddContact();
                       }}
-                      className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container text-on-surface transition-colors cursor-pointer"
+                      className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container-low/50 text-on-surface transition-colors cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-[18px]">person_add</span>
                       <span>Add contact</span>
@@ -888,7 +888,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                       setChatMenuOpen(false);
                       setGroupModalOpen(true);
                     }}
-                    className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container text-on-surface transition-colors cursor-pointer"
+                    className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container-low/50 text-on-surface transition-colors cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[18px]">groups</span>
                     <span>Group details</span>
@@ -912,7 +912,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
 
       {/* In-Chat Search Bar Overlay */}
       {searchOpen && (
-        <div className="bg-surface-container-lowest border-b border-border-hairline px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 shadow-xs animate-fade-in z-20">
+        <div className="glass-panel border-b border-border-hairline/50 px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 shadow-xs animate-fade-in z-20">
           <form onSubmit={handleSearchSubmit} className="flex-1 flex items-center gap-2">
             <span className="material-symbols-outlined text-outline text-[18px]">search</span>
             <input
@@ -982,7 +982,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
             <button
               onClick={handleLoadOlder}
               disabled={loadingOlder}
-              className="px-3.5 py-1 text-xs font-medium text-secondary bg-surface-container-lowest hover:bg-surface-container border border-border-hairline rounded-full shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-3.5 py-1 text-xs font-medium text-secondary glass-surface hover:bg-surface-container border border-border-hairline rounded-full shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               type="button"
             >
               {loadingOlder ? (
@@ -1020,7 +1020,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
         {/* Search Results Empty State */}
         {!loading && searchOpen && searchQuery.trim() && searchResults.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center text-center p-8 my-auto select-none">
-            <div className="w-12 h-12 rounded-xl bg-surface-container-lowest border border-border-hairline flex items-center justify-center text-outline mb-2">
+            <div className="w-12 h-12 rounded-xl glass-surface border border-border-hairline flex items-center justify-center text-outline mb-2">
               <span className="material-symbols-outlined text-[24px]">search_off</span>
             </div>
             <h4 className="text-sm font-semibold text-primary mb-1">No matching messages found</h4>
@@ -1033,7 +1033,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
         {/* Empty State */}
         {!loading && !error && messages.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center text-center p-8 my-auto select-none">
-            <div className="w-14 h-14 rounded-2xl bg-surface-container-lowest border border-border-hairline flex items-center justify-center text-primary mb-3 shadow-xs">
+            <div className="w-14 h-14 rounded-2xl glass-surface border border-border-hairline flex items-center justify-center text-primary mb-3 shadow-xs">
               <span className="material-symbols-outlined text-[30px] text-secondary">
                 {isGroup ? 'groups' : 'forum'}
               </span>
@@ -1048,7 +1048,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                 ? 'Send a message, share photos, react with emojis, or reply to teammates.'
                 : 'Send a message below to connect. Messages are persisted securely in your private chat history.'}
             </p>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-lowest border border-border-hairline text-[11px] font-mono text-outline shadow-xs">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-surface border border-border-hairline text-[11px] font-mono text-outline shadow-xs">
               <span className="w-2 h-2 rounded-full bg-india-green"></span>
               <span>Secure Authenticated Session</span>
             </div>
@@ -1096,7 +1096,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                   {/* Hover Actions Bar (both incoming and outgoing!) */}
                   {!msg.isDeleted && !isEditing && (
                     <div
-                      className={`opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 bg-surface-container-lowest border border-border-hairline rounded-lg shadow-xs px-1 py-0.5 self-center ${
+                      className={`opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 glass-surface border border-border-hairline rounded-lg shadow-xs px-1 py-0.5 self-center ${
                         isSelf ? 'mr-1 order-first' : 'ml-1 order-last'
                       }`}
                     >
@@ -1183,7 +1183,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
 
                     {isEditing ? (
                       /* Inline Message Editor */
-                      <div className="p-3 bg-surface-container-lowest border-2 border-secondary rounded-2xl shadow-sm min-w-[280px]">
+                      <div className="p-3 glass-panel border-2 border-secondary rounded-2xl shadow-sm min-w-[280px]">
                         <textarea
                           value={editBody}
                           onChange={(e) => setEditBody(e.target.value)}
@@ -1269,7 +1269,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                                 className={`flex items-center gap-2.5 p-2.5 rounded-xl border transition-colors ${
                                   isSelf
                                     ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white'
-                                    : 'bg-surface-container-lowest border-border-hairline hover:bg-surface-container text-on-surface'
+                                    : 'glass-surface border border-border-hairline hover:bg-surface-container text-on-surface'
                                 }`}
                               >
                                 <span className="material-symbols-outlined text-[24px]">
@@ -1313,7 +1313,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
                               className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs transition-colors border cursor-pointer ${
                                 hasReacted
                                   ? 'bg-saffron/20 border-saffron text-primary font-bold shadow-2xs'
-                                  : 'bg-surface-container-lowest border-border-hairline text-on-surface-variant hover:bg-surface-container'
+                                  : 'glass-surface border-border-hairline text-on-surface-variant hover:bg-surface-container'
                               }`}
                             >
                               <span>{r.emoji}</span>
@@ -1356,7 +1356,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
       </section>
 
       {/* Message Composer Footer */}
-      <footer className="p-3 sm:p-4 bg-surface-container-lowest border-t border-border-hairline shrink-0 shadow-xs relative">
+      <footer className="p-3 sm:p-4 glass-panel border-t border-border-hairline/50 shrink-0 shadow-xs relative">
         {sendError && (
           <div className="mb-3 max-w-3xl mx-auto">
             <AlertBanner type="error" message={sendError} onClose={() => setSendError(null)} />
@@ -1535,7 +1535,7 @@ export function ChatPanel({ conversationId, onConversationActivity, onBack }) {
       {confirmModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in">
           <div
-            className="w-full max-w-sm bg-surface-container-lowest border border-border-hairline rounded-2xl shadow-2xl p-5 text-on-surface animate-scale-in"
+            className="w-full max-w-sm glass-panel border border-border-hairline/50 rounded-2xl shadow-2xl p-5 text-on-surface animate-scale-in"
             role="dialog"
             aria-modal="true"
           >

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConvoX — Project Presentation</title>
+<style>
+  :root{
+    --navy:#0A1128;
+    --saffron:#F58220;
+    --green:#138808;
+    --alabaster:#FAFAF7;
+    --border:#E7E9E4;
+    --ink:#1A1A1A;
+    --muted:#5B6470;
+    --accent:#646CFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a;color:var(--ink);overflow:hidden}
+  #deck{width:100vw;height:100vh;position:relative;overflow:hidden;background:var(--alabaster)}
+  .slide{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    padding:46px 64px;display:none;flex-direction:column;justify-content:space-between;
+    background:#FFFFFF;border:1px solid var(--border);box-shadow:0 20px 60px -15px rgba(0,0,0,0.35);
+    transition:opacity .25s ease,transform .25s ease;
+  }
+  .slide.active{display:flex}
+  .slide h1{font-size:40px;font-weight:800;color:var(--navy);line-height:1.15;margin-bottom:8px;letter-spacing:-0.5px}
+  .slide h2{font-size:26px;font-weight:700;color:var(--navy);margin:22px 0 10px}
+  .slide h3{font-size:18px;font-weight:700;color:var(--saffron);margin:16px 0 8px}
+  .slide p{font-size:15px;line-height:1.55;color:#334155;margin-bottom:10px}
+  .slide ul{margin:6px 0 10px 22px;color:#334155;font-size:14.5px;line-height:1.6}
+  .slide ul li{margin-bottom:6px}
+  .slide strong{color:var(--navy)}
+
+  /* Header / Footer on content slides */
+  .deck-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+  .deck-kicker{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--saffron);font-weight:800}
+  .deck-title{font-size:16px;font-weight:700;color:var(--navy)}
+  .deck-foot{margin-top:auto;font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:10px}
+
+  .pill{display:inline-block;background:var(--navy);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;margin-right:6px;margin-bottom:6px}
+  .pill.saf{background:var(--saffron)} .pill.grn{background:var(--green)} .pill.ac{background:var(--accent)}
+
+  .grid{display:grid;gap:14px}
+  .grid.cols2{grid-template-columns:1fr 1fr}
+  .grid.cols3{grid-template-columns:1fr 1fr 1fr}
+  .card{border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:#fff;box-shadow:0 4px 14px -6px rgba(0,0,0,0.06)}
+  .card h4{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:6px}
+  .card p{font-size:13px;color:#475569;margin:0}
+
+  /* Title slide special */
+  .title-slide{justify-content:center;align-items:center;background:linear-gradient(135deg,#0A1128 0%,#151e3a 100%);color:#fff;border:none;box-shadow:none}
+  .title-slide h1{color:#fff;font-size:56px;margin-bottom:10px}
+  .title-slide .sub{font-size:20px;color:#cbd5e1;max-width:720px;line-height:1.5;margin-bottom:26px}
+  .title-slide .meta{font-size:14px;color:#94a3b8;margin-top:30px}
+  .title-slide .big-accent{width:5px;height:70px;background:var(--saffron);margin:18px 0}
+
+  /* Thank you slide */
+  .thank-slide{justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#0A1128 0%,#151e3a 100%);color:#fff;border:none;box-shadow:none}
+  .thank-slide h1{color:#fff;font-size:48px;margin-bottom:12px}
+  .thank-slide .sub{font-size:18px;color:#cbd5e1;max-width:640px;margin:0 auto 24px;line-height:1.6}
+
+  /* Controls */
+  #controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:50;opacity:.7}
+  #controls button{background:rgba(255,255,255,0.9);border:1px solid #cbd5e1;color:#0A1128;width:36px;height:36px;border-radius:50%;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px -4px rgba(0,0,0,0.15)}
+  #controls button:hover{background:#fff;box-shadow:0 6px 16px -6px rgba(0,0,0,0.2)}
+  #nav-dots{position:fixed;bottom:18px;right:26px;display:flex;gap:8px;z-index:50;opacity:.7}
+  .dot{width:10px;height:10px;border-radius:50%;background:#cbd5e1;border:none;cursor:pointer;transition:all .2s}
+  .dot.active{background:var(--saffron);width:24px;border-radius:6px}
+  #progress{position:fixed;top:0;left:0;height:4px;background:var(--saffron);width:0%;z-index:60;opacity:.6}
+
+  .kbd{display:inline-block;border:1px solid #94a3b8;border-radius:4px;padding:1px 6px;background:#f1f5f9;font-size:12px;font-family:monospace;color:#0A1128}
+  code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:#0A1128}
+  pre{background:#0A1128;color:#e2e8f0;padding:12px 14px;border-radius:8px;font-size:12px;overflow:auto;line-height:1.45;margin:8px 0}
+  pre code{background:transparent;padding:0;color:#e2e8f0}
+
+  .two-col{display:flex;gap:20px}
+  .two-col > *{flex:1}
+
+  @media print{
+    .slide{display:block !important;page-break-after:always;box-shadow:none;border:none;width:100%;height:auto}
+    #controls,#nav-dots,#progress{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+  <!-- Progress -->
+  <div id="progress"></div>
+
+  <!-- ===== SLIDE 1 : TITLE ===== -->
+  <div class="slide title-slide active" id="s1">
+    <div style="text-align:center">
+      <div class="pill ac" style="background:transparent;border:1px solid rgba(255,255,255,0.35);color:#fff">CONVOX PROJECT</div>
+      <h1>ConvoX</h1>
+      <div class="big-accent"></div>
+      <div class="sub">High-Performance, Privacy-First Full-Stack Messaging Platform<br><span style="font-size:15px;color:#94a3b8">C++20 &middot; React 18 &middot; Vite &middot; Tailwind CSS &middot; SQLite3 &middot; OpenSSL</span></div>
+      <div class="meta">Presented by Alok Nidhi &nbsp;|&nbsp; aloknidhi406@gmail.com &nbsp;|&nbsp; GitHub: <a style="color:#93c5fd;text-decoration:underline">github.com/aloknidhi/ConvoX</a></div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2 : AGENDA ===== -->
+  <div class="slide" id="s2">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Agenda</div><div class="deck-title">What we'll cover</div></div>
+      <div class="pill">1 of 14</div>
+    </div>
+    <div class="grid cols2" style="margin-top:10px">
+      <div class="card"><div class="pill grn">01</div><h4>What is ConvoX?</h4><p>A production-grade, full-stack messaging application built on bare-metal C++20 with a React frontend.</p></div>
+      <div class="card"><div class="pill grn">02</div><h4>Key Features</h4><p>Real-time chat, groups, rich messaging, attachments, themes &amp; dark mode.</p></div>
+      <div class="card"><div class="pill grn">03</div><h4>Tech Stack</h4><p>C++20, React, Vite, Tailwind, SQLite3, OpenSSL, cpp-httplib.</p></div>
+      <div class="card"><div class="pill grn">04</div><h4>Architecture</h4><p>OOP layered design: Controllers &rarr; Services &rarr; Repositories &rarr; SQLite.</p></div>
+    </div>
+    <div class="grid cols2" style="margin-top:18px">
+      <div class="card"><div class="pill grn">05</div><h4>Database &amp; API</h4><p>8-table SQLite schema, REST API, HttpOnly session cookies.</p></div>
+      <div class="card"><div class="pill grn">06</div><h4>Security &amp; Testing</h4><p>SQL-injection immunity, PBKDF2 hashing, 75 unit + 26 e2e tests.</p></div>
+      <div class="card"><div class="pill grn">07</div><h4>Run &amp; Deploy</h4><p>Local setup plus Render, Docker &amp; Vercel deployment options.</p></div>
+      <div class="card"><div class="pill grn">08</div><h4>Thank You</h4><p>Contact, repo link, and next steps.</p></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Agenda</span><span>github.com/aloknidhi/ConvoX</span></div>
+  </div>
+
+  <!-- ===== SLIDE 3 : WHAT IS CONVOX ===== -->
+  <div class="slide" id="s3">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Overview</div><div class="deck-title">What is ConvoX?</div></div>
+      <div class="pill">2 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:16px">
+      <p><strong>ConvoX</strong> (<span style="color:var(--saffron)">सम्पर्क</span>, meaning <em>"connection"</em> or <em>"contact"</em> in Hindi) is a full-stack, production-grade messaging application.</p>
+      <p style="font-size:14px;color:#475569">It proves modern web platforms can achieve blazing-fast response times and rock-solid memory safety without sprawling microservice overhead.</p>
+      <div class="grid cols2" style="margin-top:10px">
+        <div class="card"><h4>Bare-metal C++20 Server</h4><p>Direct execution via cpp-httplib + OpenSSL with sub-millisecond route resolution.</p></div>
+        <div class="card"><h4>Embedded SQLite3 Engine</h4><p>Thread-safe, WAL mode, non-destructive schema migrations, strict foreign-key integrity.</p></div>
+        <div class="card"><h4>WhatsApp-Style React Frontend</h4><p>Responsive split-screen messaging, cursor polling, emoji reactions, quotes &amp; file sharing.</p></div>
+        <div class="card"><h4>Google Stitch Tricolour Design</h4><p>Indian Tricolour palette (Navy, Saffron, Green) with full dark-mode ergonomics.</p></div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--saffron);background:#fffbeb"><h4 style="color:#9a3412">Design Philosophy</h4><p style="color:#7c2d12">Fast. Secure. Self-Contained. A single C++ binary serves the API; the React frontend talks to it over HTTP/JSON.</p></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Overview</span><span>2 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 4 : KEY FEATURES ===== -->
+  <div class="slide" id="s4">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Capabilities</div><div class="deck-title">Key Features</div></div>
+      <div class="pill">3 of 14</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding-right:8px">
+      <div class="grid cols2">
+        <div class="card"><h4>⚡ Real-Time Messaging</h4><ul><li>Idempotent 1-on-1 chats (no duplicate channels)</li><li>Cursor sync <code>?after=</code> for delta-only polling</li><li>Pagination <code>?before=</code> for scroll-up history</li><li>Unread badges &amp; auto mark-as-read</li></ul></div>
+        <div class="card"><h4>👥 Group Chats</h4><ul><li>Custom groups with name, description, avatar</li><li>Admin / member role-based permissions</li><li>Sole-admin protection &amp; auto-succession</li><li>Group disbanding by admins</li></ul></div>
+      </div>
+      <div class="grid cols2" style="margin-top:12px">
+        <div class="card"><h4>💬 Rich Messaging</h4><ul><li>Quoted replies with click-to-jump highlights</li><li>Emoji reactions (👍❤️😂🎉🔥🚀) with live counts</li><li>In-bar emoji picker with search &amp; caret insertion</li><li>Edit (<em>edited</em>) &amp; soft-delete tombstones</li><li>Live conversation &amp; global search</li></ul></div>
+        <div class="card"><h4>📎 Hardened Attachments</h4><ul><li>Magic-byte sniffing (JPEG, PNG, GIF, WebP, PDF, DOCX, DOC, TXT)</li><li>Binary-in-text &amp; null-byte rejection</li><li>10 MB size limit; path-traversal sanitization</li><li>Randomized hex filenames &amp; access control</li></ul></div>
+      </div>
+      <div class="grid cols2" style="margin-top:12px">
+        <div class="card"><h4>🌓 Personalization</h4><ul><li>Light / Dark / System themes (persisted in SQLite)</li><li>Anti-FOUC pre-hydration script</li><li>Web Audio API notification chimes</li><li>Desktop notifications &amp; read-receipt privacy toggle</li></ul></div>
+        <div class="card" style="border-left:4px solid var(--green);background:#f0fdf4"><h4 style="color:#14532d">Why it matters</h4><p style="color:#166534">Feature parity with mainstream chat apps, built on a memory-safe, dependency-light C++ core.</p></div>
+      </div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Key Features</span><span>3 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 5 : TECH STACK ===== -->
+  <div class="slide" id="s5">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Technology</div><div class="deck-title">Tech Stack</div></div>
+      <div class="pill">4 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+      <div class="grid cols3" style="margin-top:6px">
+        <div class="card"><div class="pill ac">Backend</div><h4>C++20</h4><p>cpp-httplib HTTP server, OpenSSL crypto, std::mutex thread safety, RAII.</p></div>
+        <div class="card"><div class="pill saf">Frontend</div><h4>React 18 + Vite</h4><p>Component UI, fetch client with credentials &amp; CSRF protection.</p></div>
+        <div class="card"><div class="pill ac">Styling</div><h4>Tailwind CSS</h4><p>Utility-first styling, Google Stitch tricolour design system.</p></div>
+        <div class="card"><div class="pill grn">Database</div><h4>SQLite3</h4><p>Embedded, WAL mode, parameterized queries, 8-table schema.</p></div>
+        <div class="card"><div class="pill ac">Build</div><h4>GNU Make</h4><p>g++ -std=c++20, single `make` builds server + test suite.</p></div>
+        <div class="card"><div class="pill saf">Deploy</div><h4>Render / Docker / Vercel</h4><p>render.yaml, Dockerfile, vercel.json, GitHub Actions CI.</p></div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--navy)"><h4>Language &amp; Badges</h4><p>Primary language: <strong>C++</strong>. Frontend: JavaScript/JSX. Badges in README display C++20, React, Vite, Tailwind, SQLite, OpenSSL, and test-passing status.</p></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Tech Stack</span><span>4 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 6 : ARCHITECTURE ===== -->
+  <div class="slide" id="s6">
+    <div class="deck-head">
+      <div><div class="deck-kicker">System Design</div><div class="deck-title">Full-Stack Architecture</div></div>
+      <div class="pill">5 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px;overflow-y:auto">
+      <div class="card"><h4>Request Flow</h4><p style="font-size:13px">React frontend &rarr; Fetch client (HttpOnly cookie + CSRF) &rarr; HTTP/JSON &rarr; C++ cpp-httplib server (:8080) &rarr; CORS origin allowlist.</p></div>
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card"><h4>Controllers (HTTP Layer)</h4><p style="font-size:13px">HealthController, AuthController, MessagingController — deserialization &amp; responses.</p></div>
+          <div class="card"><h4>Services (Business Logic)</h4><p style="font-size:13px">AuthService, MessagingService, Validator — business rules &amp; security.</p></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card"><h4>Repositories (Data Layer)</h4><p style="font-size:13px">User, Session, Conversation, Message repositories — CRUD via SQLite.</p></div>
+          <div class="card"><h4>RAII DB Layer</h4><p style="font-size:13px">Database + Statement wrappers eliminate resource/memory leaks.</p></div>
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--saffron);background:#fffbeb"><h4 style="color:#9a3412">OOP Principles</h4><ul style="font-size:13px;color:#7c2d12"><li>Separation of Concerns — clean Controller / Service / Repository boundary</li><li>Interface Segregation &amp; Dependency Inversion — pure virtual interfaces for DI &amp; unit testing</li><li>RAII resource management — no leaks</li><li>Parameterized SQL (<code>sqlite3_bind_*</code>) — zero SQL injection</li><li>Thread safety with SQLite WAL mode for concurrent readers</li></ul></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Architecture</span><span>5 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 7 : DATABASE ===== -->
+  <div class="slide" id="s7">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Data Model</div><div class="deck-title">Database Architecture</div></div>
+      <div class="pill">6 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <p style="font-size:14px;color:#475569">8 interconnected tables with automatic schema migrations, stored in <code>connectx.db</code> (WAL mode).</p>
+      <div class="grid cols2">
+        <div class="card"><h4>Core Tables</h4><ul style="font-size:13px"><li><strong>users</strong> — id, username, email, password_hash, salt, timestamps</li><li><strong>sessions</strong> — token, user_id, expires_at (HttpOnly cookies)</li><li><strong>conversations</strong> — direct or group, user_low/high_id pair</li><li><strong>conversation_members</strong> — role (admin/member), last_read_message_id</li></ul></div>
+        <div class="card"><h4>Message &amp; Media</h4><ul style="font-size:13px"><li><strong>messages</strong> — body, reply_to_id, read_at, edited_at, is_deleted</li><li><strong>message_reactions</strong> — emoji per user per message</li><li><strong>attachments</strong> — file_name, file_path, mime_type, size (10 MB cap)</li><li><strong>user_preferences</strong> — theme, sound, desktop notifications, read receipts</li></ul></div>
+      </div>
+      <div class="two-col" style="margin-top:8px">
+        <div class="card" style="border-left:4px solid var(--green);background:#f0fdf4"><h4 style="color:#14532d">Integrity Guarantees</h4><ul style="font-size:13px;color:#166534"><li>Foreign keys ON DELETE CASCADE</li><li>Unique direct-chat pair index (user_low_id &lt; user_high_id)</li><li>Unique reaction (message, user, emoji)</li><li>PRAGMA foreign_key_check clean after migrations</li><li>Zero data loss on legacy schema migration</li></ul></div>
+        <div class="card"><h4>Sample Schema</h4><pre style="font-size:11px">CREATE TABLE users (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ username TEXT UNIQUE NOT NULL,
+ email TEXT UNIQUE NOT NULL,
+ password_hash TEXT NOT NULL,
+ salt TEXT NOT NULL,
+ created_at TEXT DEFAULT (datetime('now'))
+);</pre></div>
+      </div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Database</span><span>6 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 8 : REST API ===== -->
+  <div class="slide" id="s8">
+    <div class="deck-head">
+      <div><div class="deck-kicker">API Reference</div><div class="deck-title">REST API Endpoints</div></div>
+      <div class="pill">7 of 14</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding-right:8px">
+      <p style="font-size:13px;color:#475569">All requests/responses use JSON. Auth via HttpOnly, SameSite=Lax session cookies.</p>
+      <div class="card"><h4 style="font-size:14px">Health &amp; Auth</h4><table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:6px">
+        <tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:4px">Method</th><th style="text-align:left;padding:4px">Endpoint</th><th style="text-align:left;padding:4px">Auth</th></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">GET</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/health</td><td style="padding:4px">No</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">POST</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/auth/register</td><td style="padding:4px">No</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">POST</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/auth/login</td><td style="padding:4px">No</td></tr>
+        <tr><td style="padding:4px">POST</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/auth/logout</td><td style="padding:4px">No</td></tr>
+      </table></div>
+      <div class="card" style="margin-top:10px"><h4 style="font-size:14px">Messaging &amp; Groups</h4><table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:6px">
+        <tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:4px">Method</th><th style="text-align:left;padding:4px">Endpoint</th><th style="text-align:left;padding:4px">Auth</th></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">GET</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/conversations</td><td style="padding:4px">Yes</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">POST</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/groups</td><td style="padding:4px">Yes</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">GET</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/messages?after=&amp;before=</td><td style="padding:4px">Yes</td></tr>
+        <tr><td style="padding:4px">DELETE</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/conversations/:id</td><td style="padding:4px">Yes</td></tr>
+      </table></div>
+      <div class="card" style="margin-top:10px"><h4 style="font-size:14px">Attachments &amp; Preferences</h4><table style="width:100%;font-size:12px;border-collapse:collapse;margin-top:6px">
+        <tr style="border-bottom:1px solid var(--border)"><th style="text-align:left;padding:4px">Method</th><th style="text-align:left;padding:4px">Endpoint</th><th style="text-align:left;padding:4px">Auth</th></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">POST</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/attachments</td><td style="padding:4px">Yes</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">GET</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/attachments/:id</td><td style="padding:4px">Yes</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px">DELETE</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/attachments/:id</td><td style="padding:4px">Yes</td></tr>
+        <tr><td style="padding:4px">PUT</td><td style="padding:4px;color:#0A1128;font-weight:600">/api/preferences</td><td style="padding:4px">Yes</td></tr>
+      </table></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; REST API</span><span>7 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 9 : SECURITY ===== -->
+  <div class="slide" id="s9">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Trust &amp; Safety</div><div class="deck-title">Security &amp; Cryptography</div></div>
+      <div class="pill">8 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="grid cols2">
+        <div class="card"><h4>🔐 Authentication</h4><ul style="font-size:13px"><li>PBKDF2-HMAC-SHA256 password hashing with unique per-user salts</li><li>HttpOnly, SameSite=Lax session cookies (no XSS token theft)</li><li>CSRF origin allowlist on state-changing requests</li><li>Multi-user session isolation; revocation on password change</li></ul></div>
+        <div class="card"><h4>💉 Injection Defense</h4><ul style="font-size:13px"><li>100% parameterized SQL (<code>sqlite3_bind_*</code>) — zero untrusted string concatenation</li><li>SQL injection immunity across discovery, auth, and search</li><li>Strict Content-Type &amp; magic-byte validation on uploads</li></ul></div>
+      </div>
+      <div class="grid cols2" style="margin-top:12px">
+        <div class="card"><h4>📁 File Safety</h4><ul style="font-size:13px"><li>Magic-byte sniffing (JPEG, PNG, GIF, WebP, PDF, DOCX, DOC, TXT)</li><li>Null-byte / control-character rejection for disguised payloads</li><li>10 MB limit; directory-traversal sanitization</li><li>Randomized hex filenames; participation-based download access</li></ul></div>
+        <div class="card"><h4>🔒 Privacy</h4><ul style="font-size:13px"><li>Read-receipt privacy toggle (suppress read timestamps)</li><li>Soft-delete tombstones preserve thread continuity</li><li>CORS origin allowlist; untrusted origins get 403 Forbidden</li><li>Rate limiting (sliding window, HTTP 429)</li></ul></div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--saffron);background:#fffbeb"><h4 style="color:#9a3412">Verified by Tests</h4><p style="font-size:13px;color:#7c2d12">Test suite explicitly checks SQL-injection immunity, session isolation, attachment sanitization, and read-receipt suppression across 75 unit + 26 end-to-end tests.</p></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Security</span><span>8 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 10 : TESTING ===== -->
+  <div class="slide" id="s10">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Verification</div><div class="deck-title">Automated Testing</div></div>
+      <div class="pill">9 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="grid cols3" style="margin-top:6px">
+        <div class="card" style="border-top:4px solid var(--saffron)"><div style="font-size:30px;font-weight:800;color:var(--saffron)">75</div><p style="margin-top:6px;font-size:13px">Backend C++ unit &amp; integration tests</p></div>
+        <div class="card" style="border-top:4px solid var(--accent)"><div style="font-size:30px;font-weight:800;color:var(--accent)">26</div><p style="margin-top:6px;font-size:13px">End-to-end HTTP API tests</p></div>
+        <div class="card" style="border-top:4px solid var(--green)"><div style="font-size:30px;font-weight:800;color:var(--green)">✓</div><p style="margin-top:6px;font-size:13px">Frontend production build passes</p></div>
+      </div>
+      <div class="card"><h4>Backend Test Coverage</h4><ul style="font-size:13px"><li>DB init, foreign keys, idempotent migrations</li><li>Validators: email, username, bio constraints</li><li>PBKDF2 hashing, SQL-injection immunity</li><li>Direct conversation normalization &amp; pagination</li><li>Delta polling (<code>?after=</code>) &amp; unread accuracy</li><li>Groups: admin protection, auto-succession, disband</li><li>Attachments: magic bytes, traversal, 10 MB, access control</li><li>Preferences: theme allowlist, read-receipt suppression</li></ul></div>
+      <div class="card" style="margin-top:8px"><h4>How to Run</h4><pre style="font-size:12px">cd backend
+make test          # C++ suite -> ALL 75 TESTS PASSED
+powershell -ExecutionPolicy Bypass -File .\e2e_integration_test.ps1   # -> 26/26 E2E PASSED
+cd frontend && npm run build   # -> ✓ built in 1.62s</pre></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Testing</span><span>9 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 11 : STRUCTURE ===== -->
+  <div class="slide" id="s11">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Layout</div><div class="deck-title">Project Directory Structure</div></div>
+      <div class="pill">10 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+      <pre style="font-size:12px;color:#0A1128;line-height:1.5;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px">ConvoX/
+├── backend/
+│   ├── src/           # C++ source: main.cpp, Server.cpp, controllers, services, repositories
+│   ├── include/       # Headers + httplib.h, nlohmann/json.hpp
+│   ├── tests/         # backend_test.cpp (75 tests)
+│   ├── Makefile       # build server + test_suite
+│   └── uploads/       # attachment storage
+├── frontend/
+│   ├── src/           # React components, pages, API client, contexts
+│   ├── public/        # static assets, ConvoX-logo.png
+│   ├── package.json
+│   └── vite.config.js
+├── docs/remediation/  # 7 phase remediation reports
+├── .github/workflows/ # CI (ci.yml)
+├── Dockerfile / .dockerignore
+├── render.yaml        # Render blueprint
+├── vercel.json        # Vercel frontend config
+├── start.ps1          # Windows one-click launcher
+├── .env.example       # copy to .env for secrets
+└── README.md</pre>
+      <div class="card" style="margin-top:8px;border-left:4px solid var(--navy)"><h4>Key Files</h4><ul style="font-size:13px"><li><code>backend/Makefile</code> — single-command build (<code>make</code>, <code>make test</code>, <code>make clean</code>)</li><li><code>render.yaml</code> — Render backend + persistent disk blueprint</li><li><code>.env.example</code> — template for JWT secret, cookie settings, allowed origins</li><li><code>start.ps1</code> — Windows: builds backend, starts server (:8080), launches Vite (:5173)</li></ul></div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Structure</span><span>10 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 12 : RUN LOCALLY ===== -->
+  <div class="slide" id="s12">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Get Started</div><div class="deck-title">Run Locally on Your Computer</div></div>
+      <div class="pill">11 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card"><h4>1. Clone</h4><pre style="font-size:12px">git clone https://github.com/aloknidhi/ConvoX.git
+cd ConvoX</pre></div>
+          <div class="card"><h4>2. Backend (C++)</h4><pre style="font-size:12px">cd backend
+make            # builds server + test_suite
+make test       # 75 tests pass
+./server        # http://0.0.0.0:8080</pre></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="card"><h4>3. Frontend (React)</h4><pre style="font-size:12px">cd frontend
+npm install
+npm run dev     # http://localhost:5173</pre></div>
+          <div class="card"><h4>4. Config</h4><pre style="font-size:12px">cp .env.example .env
+# edit .env: JWT secret, cookie settings, allowed origins</pre></div>
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--saffron);background:#fffbeb"><h4 style="color:#9a3412">One-Click (Windows)</h4><pre style="font-size:12px;color:#7c2d12">.\start.ps1
+# builds backend, starts C++ server on :8080, launches Vite on :5173</pre><p style="font-size:13px;color:#7c2d12;margin-top:8px">Then visit <strong>http://localhost:5173</strong>. Press <kbd>Ctrl+C</kbd> to stop.</p></div>
+      <div class="grid cols2" style="margin-top:8px">
+        <div class="card"><h4>Verify</h4><ul style="font-size:13px"><li><code>curl http://localhost:8080/health</code> &rarr; OK</li><li>Frontend loads at :5173</li><li>Register &amp; send a test message</li></ul></div>
+        <div class="card"><h4>Prerequisites</h4><ul style="font-size:13px"><li><code>base-devel openssl sqlite</code> (Arch)</li><li>Node.js + npm</li><li>WSL recommended on Windows</li></ul></div>
+      </div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Local Run</span><span>11 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 13 : DEPLOY ===== -->
+  <div class="slide" id="s13">
+    <div class="deck-head">
+      <div><div class="deck-kicker">Deployment</div><div class="deck-title">Deploy Options</div></div>
+      <div class="pill">12 of 14</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+      <div class="grid cols3">
+        <div class="card"><div class="pill saf">Render</div><h4>Backend + DB</h4><p style="font-size:13px">Connect GitHub repo; Render reads <code>render.yaml</code> and spins up the backend service + persistent disk for SQLite. Set env vars in dashboard.</p></div>
+        <div class="card"><div class="pill ac">Docker</div><h4>Anywhere</h4><p style="font-size:13px"><code>docker build -t convox .</code><br><code>docker run -p 8080:8080 --env-file .env convox</code></p></div>
+        <div class="card"><div class="pill grn">Vercel</div><h4>Frontend</h4><p style="font-size:13px"><code>vercel</code> in <code>frontend/</code>. Hosts the Vite build; point CORS allowed origins to your Vercel URL.</p></div>
+      </div>
+      <div class="grid cols2" style="margin-top:10px">
+        <div class="card"><h4>Self-Hosted (VPS / your PC)</h4><ul style="font-size:13px"><li><code>make</code> then run <code>./server</code> (or via systemd/nohup)</li><li><code>npm run build</code> frontend &rarr; serve <code>dist/</code> with nginx</li><li>GitHub Actions CI runs <code>ci.yml</code> on every push</li></ul></div>
+        <div class="card" style="border-left:4px solid var(--green);background:#f0fdf4"><h4 style="color:#14532d">CI / Env Checklist</h4><ul style="font-size:13px;color:#166534"><li>[ ] .env created from .env.example</li><li>[ ] Backend :8080 health check OK</li><li>[ ] CORS allowed origins set</li><li>[ ] Tests pass on push (ci.yml)</li></ul></div>
+      </div>
+    </div>
+    <div class="deck-foot"><span>ConvoX &nbsp;|&nbsp; Deploy</span><span>12 / 14</span></div>
+  </div>
+
+  <!-- ===== SLIDE 14 : THANK YOU ===== -->
+  <div class="slide thank-slide" id="s14">
+    <div style="text-align:center">
+      <h1>Thank You</h1>
+      <div class="sub">ConvoX — High-Performance, Privacy-First Messaging Platform<br>
+      Built with C++20, React, SQLite &amp; OpenSSL</div>
+      <div style="margin-top:26px">
+        <div class="pill ac" style="border:1px solid rgba(255,255,255,0.35);background:transparent">📂 github.com/aloknidhi/ConvoX</div>
+        <div class="pill saf" style="margin-top:10px">📧 aloknidhi406@gmail.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="controls">
+  <button id="prev" title="Previous (Left arrow)">&#10094;</button>
+  <button id="next" title="Next (Right arrow / Space)">&#10095;</button>
+</div>
+<div id="nav-dots"></div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('nav-dots');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  // Build nav dots
+  slides.forEach((_, i)=>{
+    const d = document.createElement('button');
+    d.className = 'dot' + (i===0?' active':'');
+    d.setAttribute('aria-label','Go to slide '+(i+1));
+    d.onclick = () => go(i);
+    dotsContainer.appendChild(d);
+  });
+  const dots = document.querySelectorAll('.dot');
+
+  function update(){
+    slides.forEach((s,i)=>s.classList.toggle('active', i===current));
+    dots.forEach((d,i)=>d.classList.toggle('active', i===current));
+    const pct = ((current)/(slides.length-1))*100;
+    progress.style.width = pct + '%';
+    document.title = 'ConvoX — Slide '+(current+1)+' of '+slides.length;
+  }
+
+  function go(idx){
+    if(idx<0) idx=0;
+    if(idx>=slides.length) idx=slides.length-1;
+    current = idx;
+    update();
+  }
+
+  document.getElementById('prev').onclick = () => go(current-1);
+  document.getElementById('next').onclick = () => go(current+1);
+
+  window.addEventListener('keydown', (e)=>{
+    if(e.key==='ArrowLeft' || e.key==='ArrowUp') go(current-1);
+    else if(e.key==='ArrowRight' || e.key==='ArrowDown' || e.key===' ' || e.key==='PageDown') go(current+1);
+    else if(e.key==='Home') go(0);
+    else if(e.key==='End') go(slides.length-1);
+    else if(e.key==='f' || e.key==='F' || e.key==='F11'){
+      if(!e.shiftKey) return;
+      const el = document.documentElement;
+      if(el.requestFullscreen) el.requestFullscreen();
+    }
+  });
+
+  // Touch swipe
+  let startX=0;
+  document.getElementById('deck').addEventListener('touchstart', e=>{startX=e.touches[0].clientX},{passive:true});
+  document.getElementById('deck').addEventListener('touchend', e=>{
+    const endX=e.changedTouches[0].clientX;
+    if(startX-endX>50) go(current+1);
+    else if(endX-startX>50) go(current-1);
+  },{passive:true});
+
+  update();
+})();
+</script>
+</body>
+</html>

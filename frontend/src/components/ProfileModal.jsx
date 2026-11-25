@@ -12,7 +12,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
   const displayUser = isSelf ? currentUser : (targetUser || currentUser);
 
   const [activeTab, setActiveTab] = useState('profile'); // 'profile' or 'password'
-  
+
   // Profile edit fields
   const [fullName, setFullName] = useState('');
   const [bio, setBio] = useState('');
@@ -120,13 +120,13 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-md bg-surface-container-lowest border border-border-hairline rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="w-full max-w-md glass-panel border border-border-hairline/50 rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-5 pb-4 border-b border-border-hairline flex items-center justify-between">
+        <div className="p-5 pb-4 border-b border-border-hairline/50 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="text-base font-bold text-primary">
               {isSelf ? 'My Profile & Account' : 'Member Profile'}
@@ -136,7 +136,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
           <button
             onClick={onClose}
             type="button"
-            className="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-lg glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors shadow-xs cursor-pointer"
             title="Close"
           >
             <span className="material-symbols-outlined text-[20px]">close</span>
@@ -144,9 +144,9 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
         </div>
 
         {/* User Card Hero */}
-        <div className="p-5 pb-4 bg-surface-container-low/50 border-b border-border-hairline flex items-center gap-4">
+        <div className="p-5 pb-4 glass-surface border-b border-border-hairline/50 flex items-center gap-4">
           <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-2xl bg-primary text-white font-bold flex items-center justify-center text-lg shadow-xs select-none">
+            <div className="w-14 h-14 rounded-2xl bg-primary text-white font-bold flex items-center justify-center text-lg shadow-sm select-none">
               {initials}
             </div>
             {presence.isOnline && (
@@ -163,7 +163,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                 {displayUser.fullName}
               </span>
               {isSelf && (
-                <span className="px-1.5 py-0.2 rounded-full bg-saffron/15 text-saffron text-[10px] font-bold">
+                <span className="px-1.5 py-0.2 rounded-full bg-saffron/15 text-saffron text-[10px] font-bold border border-saffron/20">
                   You
                 </span>
               )}
@@ -184,11 +184,11 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
 
         {/* Tab switcher for Self */}
         {isSelf && (
-          <div className="flex border-b border-border-hairline bg-surface-container-lowest px-5 pt-2 gap-4">
+          <div className="flex border-b border-border-hairline/50 bg-surface-container-lowest px-5 pt-2 gap-4">
             <button
               type="button"
               onClick={() => setActiveTab('profile')}
-              className={`pb-2.5 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
+              className={`pb-2 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
                 activeTab === 'profile'
                   ? 'border-primary text-primary'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -199,7 +199,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
             <button
               type="button"
               onClick={() => setActiveTab('password')}
-              className={`pb-2.5 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
+              className={`pb-2 text-xs font-semibold border-b-2 transition-all cursor-pointer ${
                 activeTab === 'password'
                   ? 'border-primary text-primary'
                   : 'border-transparent text-on-surface-variant hover:text-on-surface'
@@ -219,7 +219,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                 <label className="text-[11px] font-semibold text-outline uppercase tracking-wider block mb-1">
                   About / Bio
                 </label>
-                <div className="p-3 rounded-xl bg-surface-container-low text-xs text-on-surface leading-relaxed min-h-[60px]">
+                <div className="glass-card p-3 rounded-xl text-xs text-on-surface leading-relaxed min-h-[60px]">
                   {displayUser.bio ? displayUser.bio : <span className="text-outline italic">No bio provided.</span>}
                 </div>
               </div>
@@ -243,7 +243,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl bg-surface-container text-xs font-semibold text-primary hover:bg-surface-container-high transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-xs font-semibold text-primary transition-colors shadow-xs cursor-pointer"
                 >
                   Close
                 </button>
@@ -269,7 +269,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all shadow-xs"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                   placeholder="Your full name..."
                   required
                 />
@@ -287,7 +287,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                   onChange={(e) => setBio(e.target.value)}
                   maxLength={300}
                   rows={3}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all resize-none shadow-xs"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all resize-none shadow-xs placeholder:text-outline/70"
                   placeholder="Share a short bio or technical status..."
                 ></textarea>
               </div>
@@ -296,7 +296,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-xs font-semibold text-on-surface-variant transition-colors shadow-xs cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -334,7 +334,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                   type="password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all shadow-xs"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                   placeholder="Enter current password..."
                   required
                 />
@@ -348,7 +348,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all shadow-xs"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                   placeholder="Enter new password..."
                   required
                 />
@@ -362,7 +362,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-surface-container-low focus:bg-surface-container-lowest text-xs text-on-surface rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all shadow-xs"
+                  className="input-glass w-full px-3 py-2 text-xs text-on-surface rounded-xl border border-border-hairline/50 focus:border-secondary focus:outline-none transition-all shadow-xs placeholder:text-outline/70"
                   placeholder="Re-enter new password..."
                   required
                 />
@@ -372,7 +372,7 @@ export function ProfileModal({ isOpen, onClose, mode = 'view', targetUser = null
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl glass-surface border border-border-hairline/50 hover:bg-surface-container-low text-xs font-semibold text-on-surface-variant transition-colors shadow-xs cursor-pointer"
                 >
                   Cancel
                 </button>

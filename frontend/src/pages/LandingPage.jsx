@@ -20,7 +20,7 @@ export function LandingPage() {
           {/* Hero Section */}
           <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 flex flex-col items-center text-center">
             {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high border border-border-hairline text-xs font-medium text-on-surface-variant mb-6 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-surface border border-border-hairline/50 text-xs font-medium text-on-surface-variant mb-6 shadow-xs">
               <span className="w-2 h-2 rounded-full bg-india-green"></span>
               <span>A private, focused space for conversations</span>
             </div>
@@ -52,7 +52,7 @@ export function LandingPage() {
                   </Link>
                   <Link
                     to="/login"
-                    className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-surface-container-lowest text-primary hover:bg-surface-container-high border border-border-hairline font-semibold shadow-sm transition-all duration-150"
+                    className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl glass-surface text-primary hover:bg-surface-container-low border border-border-hairline/50 font-semibold shadow-xs transition-all duration-150"
                   >
                     Log In
                   </Link>
@@ -62,7 +62,7 @@ export function LandingPage() {
 
             {/* Value Pillars */}
             <div id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl text-left mt-2 mb-14">
-              <div className="p-6 rounded-2xl bg-surface-container-lowest border border-border-hairline shadow-xs hover:shadow-sm transition-shadow">
+              <div className="p-6 glass-panel rounded-2xl border border-border-hairline/50 shadow-xs hover:shadow-sm transition-shadow animate-fade-in">
                 <div className="w-10 h-10 rounded-xl bg-primary-container text-white flex items-center justify-center mb-4">
                   <span className="material-symbols-outlined text-[20px]">chat</span>
                 </div>
@@ -72,7 +72,7 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-surface-container-lowest border border-border-hairline shadow-xs hover:shadow-sm transition-shadow">
+              <div className="p-6 glass-panel rounded-2xl border border-border-hairline/50 shadow-xs hover:shadow-sm transition-shadow animate-fade-in">
                 <div className="w-10 h-10 rounded-xl bg-surface-container-high text-primary flex items-center justify-center mb-4">
                   <span className="material-symbols-outlined text-[20px]">palette</span>
                 </div>
@@ -82,7 +82,7 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-surface-container-lowest border border-border-hairline shadow-xs hover:shadow-sm transition-shadow">
+              <div className="p-6 glass-panel rounded-2xl border border-border-hairline/50 shadow-xs hover:shadow-sm transition-shadow animate-fade-in">
                 <div className="w-10 h-10 rounded-xl bg-saffron/15 text-saffron flex items-center justify-center mb-4">
                   <span className="material-symbols-outlined text-[20px]">devices</span>
                 </div>
@@ -96,7 +96,7 @@ export function LandingPage() {
 
           {/* Product Preview Section (Approved Stitch Desktop Preview) */}
           <section id="preview" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-            <div className="relative w-full rounded-2xl bg-surface-container-lowest border border-border-hairline shadow-xl overflow-hidden">
+            <div className="relative w-full glass-panel rounded-2xl border border-border-hairline/50 shadow-xl overflow-hidden">
               {/* Tricolour Accent Strip */}
               <div className="w-full flex h-[3px]">
                 <span className="flex-1 bg-saffron"></span>
@@ -105,7 +105,7 @@ export function LandingPage() {
               </div>
 
               {/* Window Controls Header */}
-              <div className="px-6 py-3 bg-surface-container-low border-b border-border-hairline flex items-center justify-between">
+              <div className="px-6 py-3 bg-surface-container-low border-b border-border-hairline/50 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-surface-container-highest"></span>
@@ -128,20 +128,20 @@ export function LandingPage() {
               {/* Shell Preview Body: 2-Column Chat Simulation from Stitch */}
               <div className="grid grid-cols-12 min-h-[460px]">
                 {/* Left Column: Sample Conversations List (4 Cols) */}
-                <div className="col-span-12 md:col-span-4 bg-surface-container-low/60 border-r border-border-hairline p-4 flex flex-col justify-between">
+                <div className="col-span-12 md:col-span-4 bg-surface-container-low/60 border-r border-border-hairline/50 p-4 flex flex-col justify-between">
                   <div className="flex flex-col gap-2">
                     {/* Search bar inside pane */}
-                    <div className="px-3 py-2 bg-surface-container-lowest rounded-xl mb-1 flex items-center gap-2 text-on-surface-variant border border-border-hairline shadow-xs">
+                    <div className="px-3 py-2 glass-surface rounded-xl mb-1 flex items-center gap-2 text-on-surface-variant border border-border-hairline/50 shadow-xs">
                       <span className="material-symbols-outlined text-[16px]">search</span>
                       <span className="text-xs text-on-surface-variant/70">Jump to conversation...</span>
                     </div>
 
                     {/* Contact Item: Active (Arun Kumar) */}
-                    <div className="p-3 rounded-xl bg-surface-container-lowest border border-border-hairline shadow-xs flex items-center justify-between">
+                    <div className="p-3 rounded-xl glass-surface border border-border-hairline/50 shadow-xs flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="relative w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-white font-semibold text-xs">
                           AK
-                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-india-green ring-2 ring-white"></span>
+                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-india-green ring-2 ring-surface-container-lowest"></span>
                         </div>
                         <div className="flex flex-col">
                           <span className="text-xs font-bold text-on-surface leading-tight">Arun Kumar</span>
@@ -156,7 +156,7 @@ export function LandingPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-semibold text-xs">
                           PS
-                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-outline-variant ring-2 ring-white"></span>
+                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-outline-variant ring-2 ring-surface-container-lowest"></span>
                         </div>
                         <div className="flex flex-col">
                           <span className="text-xs font-semibold text-on-surface leading-tight">Priya Sharma</span>
@@ -171,7 +171,7 @@ export function LandingPage() {
                       <div className="flex items-center gap-3">
                         <div className="relative w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-semibold text-xs">
                           RN
-                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-saffron ring-2 ring-white"></span>
+                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-saffron ring-2 ring-surface-container-lowest"></span>
                         </div>
                         <div className="flex flex-col">
                           <span className="text-xs font-semibold text-on-surface leading-tight">Rohan Nair</span>
@@ -183,7 +183,7 @@ export function LandingPage() {
                   </div>
 
                   {/* Profile Summary strip at bottom */}
-                  <div className="p-2.5 rounded-xl bg-surface-container-lowest border border-border-hairline flex items-center justify-between mt-3">
+                  <div className="p-2.5 rounded-xl glass-surface border border-border-hairline/50 flex items-center justify-between mt-3">
                     <div className="flex items-center gap-2">
                       <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold">
                         ME
@@ -195,13 +195,13 @@ export function LandingPage() {
                 </div>
 
                 {/* Right Column: Active Conversation Stream (8 Cols) */}
-                <div className="col-span-12 md:col-span-8 bg-surface-container-lowest flex flex-col justify-between">
+                <div className="col-span-12 md:col-span-8 glass-surface flex flex-col justify-between">
                   {/* Pinned Contact Header */}
-                  <div className="px-6 py-3.5 bg-surface-container-lowest border-b border-border-hairline flex items-center justify-between shadow-xs">
+                  <div className="px-6 py-3.5 glass-surface border-b border-border-hairline/50 flex items-center justify-between shadow-xs">
                     <div className="flex items-center gap-3">
                       <div className="relative w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-white font-semibold text-xs">
                         AK
-                        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-india-green ring-2 ring-white"></span>
+                        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-india-green ring-2 ring-surface-container-lowest"></span>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-bold text-on-surface">Arun Kumar</span>
@@ -251,8 +251,8 @@ export function LandingPage() {
                   </div>
 
                   {/* Composer Simulation */}
-                  <div className="p-4 bg-surface-container-lowest border-t border-border-hairline">
-                    <div className="flex items-center gap-2 p-1.5 rounded-xl bg-surface-container-low border border-border-hairline">
+                  <div className="p-4 glass-surface border-t border-border-hairline/50">
+                    <div className="flex items-center gap-2 p-1.5 rounded-xl bg-surface-container-low border border-border-hairline/50">
                       <input
                         disabled
                         readOnly
@@ -276,10 +276,10 @@ export function LandingPage() {
       </main>
 
       {/* Clean Product Footer */}
-      <footer className="w-full py-6 border-t border-border-hairline bg-surface-container-low text-xs text-on-surface-variant">
+      <footer className="w-full py-6 border-t border-border-hairline/50 bg-surface-container-low text-xs text-on-surface-variant">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <div className="bg-white px-2 py-0.5 rounded-lg border border-border-hairline shadow-xs flex items-center">
+            <div className="bg-white px-2 py-0.5 rounded-lg border border-border-hairline/50 shadow-xs flex items-center glass-surface">
               <img src="/ConvoX-logo.png" alt="ConvoX" className="h-5 w-auto object-contain" />
             </div>
             <span className="text-outline">·</span>

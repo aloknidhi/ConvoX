@@ -295,44 +295,44 @@ export function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-surface flex text-on-surface">
-      {/* 68px Fixed Sidebar */}
+      {/* 72px Fixed Sidebar (collapsible) */}
       <Sidebar />
 
-      {/* Main Content Area offset by 68px */}
-      <div className="pl-[68px] flex-1 flex flex-col h-screen overflow-hidden">
+      {/* Main Content Area offset by sidebar width */}
+      <div className={`pl-[72px] flex-1 flex flex-col h-screen overflow-hidden transition-all duration-300`}>
         {/* Top Header Bar */}
-        <header className="h-14 bg-surface-container-lowest border-b border-border-hairline z-40 flex items-center justify-between px-6 shrink-0 transition-colors">
+        <header className="h-16 glass-panel border-b border-border-hairline/50 z-40 flex items-center justify-between px-6 shrink-0 flex-shrink-0">
           <div className="flex items-center gap-3">
             <div
-              className="h-8 px-2 py-0.5 rounded-lg bg-white border border-border-hairline flex items-center shadow-xs cursor-pointer"
+              className="h-9 px-2 py-0.5 rounded-xl bg-white border border-border-hairline/50 flex items-center justify-center shadow-xs cursor-pointer transition-transform hover:scale-105"
               onClick={() => navigate('/dashboard')}
               title="ConvoX Dashboard"
             >
               <img
                 src="/ConvoX-logo.png"
                 alt="ConvoX"
-                className="h-6 w-auto object-contain"
+                className="h-7 w-auto object-contain"
               />
             </div>
-            <span className="text-outline/50">•</span>
+            <span className="w-0.5 h-0.5 rounded-full bg-outline-variant"></span>
             <span className="text-sm font-medium text-on-surface-variant">Messages</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Quick Theme Toggle Button */}
             <button
               type="button"
               onClick={toggleTheme}
               title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               aria-label={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="w-8 h-8 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center cursor-pointer shadow-xs active:scale-95"
+              className="w-10 h-10 rounded-xl glass-surface text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low/50 transition-all flex items-center justify-center cursor-pointer focus-visible-ring active:scale-95"
             >
               <span className={`material-symbols-outlined text-[19px] ${isDarkMode ? 'text-amber-400' : 'text-slate-700'}`}>
                 {isDarkMode ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
 
-            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container-low border border-border-hairline text-xs font-mono text-on-surface-variant">
+            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container-low border border-border-hairline/50 text-xs font-mono text-on-surface-variant glass-surface">
               <span className="w-2 h-2 rounded-full bg-india-green"></span>
               <span>Logged in as @{user?.username}</span>
             </div>
@@ -340,7 +340,7 @@ export function DashboardPage() {
             <button
               type="button"
               onClick={() => setSelfProfileOpen(true)}
-              className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-semibold shadow-xs hover:ring-2 hover:ring-primary/40 transition-all cursor-pointer"
+              className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-xs font-semibold shadow-md hover:ring-2 hover:ring-primary/40 transition-all cursor-pointer focus-visible-ring"
               title="Edit Profile"
             >
               {(user?.fullName || user?.username || 'U')[0].toUpperCase()}
@@ -354,10 +354,10 @@ export function DashboardPage() {
           <aside
             className={`${
               conversationId ? 'hidden md:flex' : 'flex'
-            } w-full md:w-[340px] shrink-0 bg-surface-container-lowest border-r border-border-hairline flex-col h-full z-10`}
+            } w-full md:w-[360px] shrink-0 glass-panel border-r border-border-hairline/50 flex-col h-full z-10 flex-shrink-0`}
           >
             {/* Header */}
-            <div className="p-4 sm:p-5 pb-3">
+            <div className="p-4 sm:p-5 pb-3 flex-shrink-0">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2.5">
                   <h1 className="text-lg font-bold text-primary tracking-tight">Messages</h1>
@@ -369,20 +369,20 @@ export function DashboardPage() {
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setNewGroupOpen(true)}
-                    className="w-8 h-8 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary flex items-center justify-center transition-all active:scale-95 group shadow-xs cursor-pointer"
+                    className="w-9 h-9 rounded-xl glass-surface text-on-surface hover:bg-surface-container-low/50 transition-all flex items-center justify-center cursor-pointer focus-visible-ring active:scale-95"
                     title="Create New Group"
                     type="button"
                   >
-                    <span className="material-symbols-outlined text-[19px]">group_add</span>
+                    <span className="material-symbols-outlined text-[18px]">group_add</span>
                   </button>
 
                   <button
                     onClick={() => navigate('/find-people')}
-                    className="w-8 h-8 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary flex items-center justify-center transition-all active:scale-95 group shadow-xs cursor-pointer"
+                    className="w-9 h-9 rounded-xl glass-surface text-on-surface hover:bg-surface-container-low/50 transition-all flex items-center justify-center cursor-pointer focus-visible-ring active:scale-95"
                     title="Find People to message"
                     type="button"
                   >
-                    <span className="material-symbols-outlined text-[19px] group-hover:rotate-90 transition-transform">
+                    <span className="material-symbols-outlined text-[18px] group-hover:rotate-90 transition-transform">
                       person_add
                     </span>
                   </button>
@@ -390,7 +390,7 @@ export function DashboardPage() {
               </div>
 
               {/* Search Bar */}
-              <div className="relative w-full">
+              <div className="relative w-full flex-shrink-0">
                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">
                   search
                 </span>
@@ -403,19 +403,19 @@ export function DashboardPage() {
                       ? 'Search all message history...'
                       : 'Search conversations & groups...'
                   }
-                  className="w-full pl-9 pr-3 py-2 bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-xs text-on-surface placeholder:text-outline rounded-lg border border-border-hairline focus:border-secondary focus:outline-none transition-all"
+                  className="w-full pl-9 pr-3 py-2 input-glass text-xs placeholder:text-on-surface-variant/60"
                 />
               </div>
 
               {/* Filter Chips */}
-              <div className="flex items-center gap-1.5 mt-3 pt-1 overflow-x-auto no-scrollbar">
+              <div className="flex items-center gap-1.5 mt-3 pt-1 overflow-x-auto no-scrollbar flex-shrink-0">
                 <button
                   type="button"
                   onClick={() => setActiveTab('all')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors cursor-pointer shrink-0 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer focus-visible-ring ${
                     activeTab === 'all'
-                      ? 'bg-primary text-white shadow-xs'
-                      : 'text-on-surface-variant hover:bg-surface-container'
+                      ? 'btn-glass-primary shadow-xs'
+                      : 'btn-glass-secondary text-on-surface-variant hover:bg-surface-container-low/50'
                   }`}
                 >
                   All
@@ -423,15 +423,15 @@ export function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('unread')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 focus-visible-ring ${
                     activeTab === 'unread'
-                      ? 'bg-primary text-white shadow-xs'
-                      : 'text-on-surface-variant hover:bg-surface-container'
+                      ? 'btn-glass-primary shadow-xs'
+                      : 'btn-glass-secondary text-on-surface-variant hover:bg-surface-container-low/50'
                   }`}
                 >
                   <span>Unread</span>
                   {totalUnread > 0 && (
-                    <span className="px-1.5 py-0.2 rounded-full bg-saffron text-[10px] text-white font-bold">
+                    <span className="px-1.5 py-0.5 rounded-full bg-saffron text-[10px] text-white font-bold">
                       {totalUnread}
                     </span>
                   )}
@@ -439,10 +439,10 @@ export function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('direct')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors cursor-pointer shrink-0 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer focus-visible-ring ${
                     activeTab === 'direct'
-                      ? 'bg-primary text-white shadow-xs'
-                      : 'text-on-surface-variant hover:bg-surface-container'
+                      ? 'btn-glass-primary shadow-xs'
+                      : 'btn-glass-secondary text-on-surface-variant hover:bg-surface-container-low/50'
                   }`}
                 >
                   Direct
@@ -450,10 +450,10 @@ export function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('groups')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors cursor-pointer shrink-0 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer focus-visible-ring ${
                     activeTab === 'groups'
-                      ? 'bg-primary text-white shadow-xs'
-                      : 'text-on-surface-variant hover:bg-surface-container'
+                      ? 'btn-glass-primary shadow-xs'
+                      : 'btn-glass-secondary text-on-surface-variant hover:bg-surface-container-low/50'
                   }`}
                 >
                   Groups
@@ -461,10 +461,10 @@ export function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('messages')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer shrink-0 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1 focus-visible-ring ${
                     activeTab === 'messages'
-                      ? 'bg-primary text-white shadow-xs'
-                      : 'text-on-surface-variant hover:bg-surface-container'
+                      ? 'btn-glass-primary shadow-xs'
+                      : 'btn-glass-secondary text-on-surface-variant hover:bg-surface-container-low/50'
                   }`}
                   title="Search message history across all conversations"
                 >
@@ -476,14 +476,14 @@ export function DashboardPage() {
 
             {/* Error Banner */}
             {error && (
-              <div className="p-3">
+              <div className="p-3 flex-shrink-0">
                 <AlertBanner type="error" message={error} onClose={() => setError(null)} />
               </div>
             )}
 
             {/* Global Message Search Results View */}
             {activeTab === 'messages' && (
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto custom-scrollbar">
                 {!searchQuery.trim() ? (
                   <div className="px-4 py-8 text-center flex flex-col items-center">
                     <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant mb-2">
@@ -524,7 +524,7 @@ export function DashboardPage() {
                         <div
                           key={msg.id}
                           onClick={() => navigate(`/dashboard/${msg.conversationId}`)}
-                          className="p-3 hover:bg-surface-container-low cursor-pointer transition-colors"
+                          className="p-3 hover:bg-surface-container-low/50 cursor-pointer transition-colors border-b border-border-hairline/40 last:border-0"
                         >
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-xs font-semibold text-primary truncate">
@@ -562,7 +562,7 @@ export function DashboardPage() {
 
             {/* Conversation Empty State List */}
             {activeTab !== 'messages' && !loading && filteredConversations.length === 0 && (
-              <div className="flex-1 overflow-y-auto px-4 py-6 flex flex-col items-center justify-center text-center">
+              <div className="flex-1 overflow-y-auto px-4 py-6 flex flex-col items-center justify-center text-center custom-scrollbar">
                 <div className="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant mb-3">
                   <span className="material-symbols-outlined text-[24px]">chat_bubble_outline</span>
                 </div>
@@ -576,7 +576,7 @@ export function DashboardPage() {
                 </p>
                 <button
                   onClick={() => navigate('/find-people')}
-                  className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors border border-border-hairline cursor-pointer"
+                  className="px-3.5 py-1.5 text-xs font-semibold rounded-xl btn-glass-primary shadow-xs cursor-pointer focus-visible-ring"
                   type="button"
                 >
                   Find People
@@ -586,7 +586,7 @@ export function DashboardPage() {
 
             {/* Populated Conversation List */}
             {activeTab !== 'messages' && !loading && filteredConversations.length > 0 && (
-              <div className="flex-1 overflow-y-auto divide-y divide-border-hairline/60">
+              <div className="flex-1 overflow-y-auto divide-y divide-border-hairline/60 custom-scrollbar">
                 {filteredConversations.map((conv) => {
                   const isGroup = conv.type === 'group';
                   const peer = conv.participant;
@@ -625,27 +625,27 @@ export function DashboardPage() {
                     <div
                       key={conv.id}
                       onClick={() => navigate(`/dashboard/${conv.id}`)}
-                      className={`relative p-3.5 flex items-center justify-between transition-colors cursor-pointer group ${
+                      className={`relative p-3.5 flex items-center justify-between transition-all duration-200 cursor-pointer group border-b border-border-hairline/40 last:border-0 ${
                         isActive
-                          ? 'bg-saffron/10'
+                          ? 'glass-surface bg-surface-container-low/30'
                           : hasUnread
-                          ? 'bg-surface-container-low/60 hover:bg-surface-container-low'
-                          : 'hover:bg-surface-container-low'
+                          ? 'hover:bg-surface-container-low/40'
+                          : 'hover:bg-surface-container-low/30'
                       }`}
                     >
                       {/* Active indicator bar */}
                       {isActive && (
-                        <span className="absolute left-0 top-2 bottom-2 w-1 bg-saffron rounded-r-full"></span>
+                        <span className="absolute left-0 top-2 bottom-2 w-1 bg-primary rounded-r-full"></span>
                       )}
 
                       <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className="relative shrink-0">
                           {isGroup ? (
-                            <div className="w-10 h-10 rounded-full bg-linear-to-tr from-[#1B365D] to-[#2E5B88] text-white flex items-center justify-center text-xs font-bold shadow-xs select-none">
+                            <div className="w-10 h-10 rounded-xl bg-primary-container text-white flex items-center justify-center text-xs font-bold shadow-xs select-none">
                               <span className="material-symbols-outlined text-[20px]">groups</span>
                             </div>
                           ) : (
-                            <div className="w-10 h-10 rounded-full bg-primary-container text-white font-bold flex items-center justify-center text-xs shadow-xs select-none">
+                            <div className="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center text-xs shadow-xs select-none">
                               {initials}
                             </div>
                           )}
@@ -661,9 +661,7 @@ export function DashboardPage() {
                           <div className="flex items-center justify-between mb-0.5">
                             <div className="flex items-center gap-1.5 min-w-0">
                               <span
-                                className={`text-xs truncate ${
-                                  isActive || hasUnread ? 'text-primary font-bold' : 'text-on-surface'
-                                }`}
+                                className={`text-xs truncate ${isActive || hasUnread ? 'text-primary font-bold' : 'text-on-surface'}`}
                               >
                                 {isGroup ? conv.name : (peer?.fullName || `@${peer?.username}`)}
                               </span>
@@ -680,16 +678,12 @@ export function DashboardPage() {
 
                           <div className="flex items-center justify-between">
                             <p
-                              className={`text-xs truncate ${
-                                hasUnread
-                                  ? 'text-primary font-semibold'
-                                  : 'text-on-surface-variant'
-                              }`}
+                              className={`text-xs truncate ${hasUnread ? 'text-primary font-semibold' : 'text-on-surface-variant'}`}
                             >
                               {snippet}
                             </p>
                             {hasUnread && !isActive && (
-                              <span className="px-1.5 py-0.2 rounded-full bg-saffron text-white text-[10px] font-bold shrink-0 ml-1">
+                              <span className="px-1.5 py-0.2 rounded-full bg-primary text-[10px] text-on-primary font-bold shrink-0 ml-1">
                                 {conv.unreadCount}
                               </span>
                             )}
@@ -705,7 +699,7 @@ export function DashboardPage() {
                             e.stopPropagation();
                             setActiveDropdownId(activeDropdownId === conv.id ? null : conv.id);
                           }}
-                          className="w-7 h-7 rounded-lg opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-all cursor-pointer"
+                          className="w-8 h-8 rounded-xl opacity-0 group-hover:opacity-100 focus:opacity-100 hover:bg-surface-container-low/50 text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-all cursor-pointer"
                           title="Options"
                           aria-label="Options"
                         >
@@ -715,7 +709,7 @@ export function DashboardPage() {
                         {activeDropdownId === conv.id && (
                           <div
                             ref={dropdownRef}
-                            className="absolute right-0 top-8 w-44 bg-surface-container-lowest border border-border-hairline rounded-xl shadow-xl py-1 z-30 animate-fade-in text-xs"
+                            className="absolute right-0 top-9 w-48 glass-panel border border-border-hairline/50 rounded-xl shadow-xl py-1 z-30 animate-fade-in text-xs"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <button
@@ -740,7 +734,7 @@ export function DashboardPage() {
                                     setModalError(null);
                                     setConfirmModal({ type: 'remove_contact', user: peer, conv });
                                   }}
-                                  className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container text-on-surface transition-colors cursor-pointer"
+                                  className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container-low/50 text-on-surface transition-colors cursor-pointer"
                                 >
                                   <span className="material-symbols-outlined text-[17px]">person_remove</span>
                                   <span>Remove contact</span>
@@ -752,7 +746,7 @@ export function DashboardPage() {
                                     setActiveDropdownId(null);
                                     handleAddContact(peer);
                                   }}
-                                  className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container text-on-surface transition-colors cursor-pointer"
+                                  className="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-surface-container-low/50 text-on-surface transition-colors cursor-pointer"
                                 >
                                   <span className="material-symbols-outlined text-[17px]">person_add</span>
                                   <span>Add contact</span>
@@ -779,7 +773,7 @@ export function DashboardPage() {
             )}
 
             {/* Directory Link Card */}
-            <div className="p-3 m-3 bg-surface-container-low border border-border-hairline rounded-xl flex items-center justify-between">
+            <div className="p-3 m-3 glass-surface border border-border-hairline/50 rounded-xl flex items-center justify-between shadow-xs flex-shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs">
                   <span className="material-symbols-outlined text-[18px]">hub</span>
@@ -791,7 +785,7 @@ export function DashboardPage() {
               </div>
               <button
                 onClick={() => navigate('/find-people')}
-                className="w-7 h-7 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors cursor-pointer"
+                className="w-7 h-7 rounded-xl hover:bg-surface-container-low/50 flex items-center justify-center text-on-surface-variant transition-colors cursor-pointer"
                 title="Open Directory"
                 type="button"
               >
@@ -816,11 +810,11 @@ export function DashboardPage() {
               /* Approved Stitch Empty State Stage */
               <div className="flex-1 flex flex-col justify-between items-center relative overflow-hidden select-none p-6">
                 {/* Ambient Decorative Motif */}
-                <div className="absolute -top-32 right-12 w-96 h-96 rounded-full bg-gradient-to-br from-secondary/5 via-primary/5 to-transparent blur-3xl pointer-events-none"></div>
-                <div className="absolute -bottom-24 -left-20 w-80 h-80 rounded-full bg-gradient-to-tr from-saffron/5 via-india-green/5 to-transparent blur-3xl pointer-events-none"></div>
+                <div className="absolute -top-32 right-12 w-96 h-96 rounded-full bg-gradient-to-br from-primary/10 via-surface-container-high to-transparent blur-3xl pointer-events-none"></div>
+                <div className="absolute -bottom-24 -left-20 w-80 h-80 rounded-full bg-gradient-to-tr from-secondary/10 via-india-green/10 to-transparent blur-3xl pointer-events-none"></div>
 
                 {/* Top Stage Header */}
-                <header className="w-full flex items-center justify-between z-10">
+                <header className="w-full flex items-center justify-between z-10 flex-shrink-0">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-outline font-mono">
                       Direct Communication Fabric
@@ -836,7 +830,7 @@ export function DashboardPage() {
                 {/* Centered Minimal Hero Panel */}
                 <div className="w-full max-w-lg px-6 flex flex-col items-center text-center my-auto z-10">
                   <div className="relative mb-6 flex items-center justify-center">
-                    <div className="w-16 h-16 p-3.5 rounded-2xl bg-surface-container-lowest border border-border-hairline shadow-sm flex items-center justify-center relative">
+                    <div className="w-16 h-16 p-3.5 rounded-2xl glass-surface border border-border-hairline/50 shadow-md flex items-center justify-center relative">
                       <svg className="w-10 h-10" fill="none" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="29" cy="11" fill="#F58220" r="3.5" />
                         <circle cx="11" cy="29" fill="#138808" r="2.5" />
@@ -863,7 +857,7 @@ export function DashboardPage() {
                     <button
                       type="button"
                       onClick={() => navigate('/find-people')}
-                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-primary text-white hover:bg-primary-hover active:scale-[0.98] transition-all font-semibold text-sm shadow-xs flex items-center justify-center gap-2 group cursor-pointer"
+                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl btn-glass-primary shadow-xs cursor-pointer focus-visible-ring flex items-center justify-center gap-2 group font-semibold text-sm transition-all active:scale-[0.98]"
                     >
                       <span className="material-symbols-outlined text-[19px] group-hover:scale-110 transition-transform">
                         person_search
@@ -879,8 +873,8 @@ export function DashboardPage() {
                 </div>
 
                 {/* Bottom Status Footer */}
-                <footer className="w-full flex items-center justify-center z-10">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-border-hairline text-xs font-medium text-on-surface-variant">
+                <footer className="w-full flex items-center justify-center z-10 flex-shrink-0">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-border-hairline/50 text-xs font-medium text-on-surface-variant glass-surface">
                     <span className="w-2 h-2 rounded-full bg-india-green"></span>
                     <span>Connected to ConvoX Server • Active</span>
                   </div>
@@ -900,9 +894,9 @@ export function DashboardPage() {
 
       {/* Safe Deletion & Contact Removal Confirmation Modal */}
       {confirmModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md animate-fade-in">
           <div
-            className="w-full max-w-sm bg-surface-container-lowest border border-border-hairline rounded-2xl shadow-2xl p-5 text-on-surface animate-scale-in"
+            className="w-full max-w-sm glass-panel border border-border-hairline/50 rounded-2xl shadow-2xl p-5 text-on-surface"
             role="dialog"
             aria-modal="true"
           >
@@ -940,7 +934,7 @@ export function DashboardPage() {
                   }
                 }}
                 disabled={actionLoading}
-                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors cursor-pointer disabled:opacity-50"
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-xl btn-glass-secondary hover:bg-surface-container-low/50 transition-colors cursor-pointer disabled:opacity-50 focus-visible-ring"
               >
                 Cancel
               </button>
@@ -955,7 +949,7 @@ export function DashboardPage() {
                   }
                 }}
                 disabled={actionLoading}
-                className="px-4 py-1.5 text-xs font-semibold rounded-lg bg-error hover:bg-error/90 text-white shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-semibold rounded-xl btn-glass-error shadow-xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 focus-visible-ring"
               >
                 {actionLoading && (
                   <span className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span>

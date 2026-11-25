@@ -45,16 +45,17 @@ export function LoginPage() {
 
       <main className="flex-1 pt-16 flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
         {/* Subtle Ambient Circles */}
-        <div className="absolute -top-32 -left-28 w-96 h-96 rounded-full bg-secondary/5 blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-32 -left-28 w-96 h-96 rounded-full bg-secondary/10 blur-3xl pointer-events-none"></div>
         <div className="absolute -bottom-36 -right-20 w-[420px] h-[420px] rounded-full bg-saffron/5 blur-3xl pointer-events-none"></div>
+        <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full bg-india-green/5 blur-2xl pointer-events-none"></div>
 
         {/* Authentication Card */}
         <div className="relative w-full max-w-[440px] z-10 my-8">
-          <div className="bg-surface-container-lowest rounded-2xl border border-border-hairline shadow-lg p-6 sm:p-8 flex flex-col">
+          <div className="glass-panel border border-border-hairline/50 rounded-2xl shadow-xl p-6 sm:p-8 flex flex-col animate-fade-in">
             {/* Top Brand Emblem */}
-            <div className="flex items-center justify-between pb-6 border-b border-border-hairline mb-6">
+            <div className="flex items-center justify-between pb-6 border-b border-border-hairline/50 mb-6">
               <div className="flex items-center gap-3">
-                <div className="bg-white px-2.5 py-1 rounded-xl border border-border-hairline shadow-xs flex items-center">
+                <div className="bg-surface-container-low px-2.5 py-1 rounded-xl border border-border-hairline/50 shadow-xs flex items-center glass-surface">
                   <img
                     src="/ConvoX-logo.png"
                     alt="ConvoX"
@@ -63,7 +64,7 @@ export function LoginPage() {
                 </div>
               </div>
 
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low border border-border-hairline text-xs font-mono text-on-surface-variant">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low border border-border-hairline/50 text-xs font-mono text-on-surface-variant glass-surface">
                 <span className="w-1.5 h-1.5 rounded-full bg-india-green"></span>
                 <span>Active</span>
               </div>
@@ -107,7 +108,7 @@ export function LoginPage() {
                     onChange={(e) => setIdentifier(e.target.value)}
                     placeholder="Enter your username or email"
                     disabled={loading}
-                    className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-10 pr-3 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                    className="w-full input-glass text-on-surface text-sm pl-10 pr-3 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
                   />
                 </div>
               </div>
@@ -129,7 +130,7 @@ export function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     disabled={loading}
-                    className="w-full bg-surface-container-low hover:bg-surface-container focus:bg-surface-container-lowest text-on-surface text-sm pl-10 pr-10 py-2.5 rounded-xl border border-border-hairline focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
+                    className="w-full input-glass text-on-surface text-sm pl-10 pr-10 py-2.5 rounded-xl focus:border-secondary focus:outline-none transition-all placeholder:text-outline/70"
                   />
                   <button
                     type="button"
@@ -182,7 +183,7 @@ export function LoginPage() {
             </form>
 
             {/* Bottom link to Register */}
-            <div className="mt-6 pt-5 border-t border-border-hairline text-center text-xs text-on-surface-variant">
+            <div className="mt-6 pt-5 border-t border-border-hairline/50 text-center text-xs text-on-surface-variant">
               Don't have an account yet?{' '}
               <Link to="/signup" className="font-semibold text-primary hover:underline">
                 Create Account
